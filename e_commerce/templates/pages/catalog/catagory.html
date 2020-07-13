@@ -1,0 +1,81 @@
+{% extends 'lib/base.html' %} {% load static %} {% block title %} Marketing {% endblock title %} {% block stylesheet %} {{ block.super }} {% endblock stylesheet %} {% block content %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Manage categories</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Catagory</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Catagory</div>
+            <div class="card-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+                <thead class="text-center">
+                    <tr>
+                        <th colspan="4">Catagory</th>
+                        <th>Featured</th>
+                        <th>Subcat</th>
+                        <th colspan="2">Products <i class="fas fa-question-circle"></i></th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <tr>
+                        <td class="px-1">
+                            <!-- drag handle -->
+                            <span class="handle">
+                            <i class="fas fa-ellipsis-v"></i>
+                            <i class="fas fa-ellipsis-v"></i>
+                            </span>
+                        </td>
+                        <td class="px-1">
+                            <span>
+                                <i class="fas fa-power-off"></i>
+                            </span>
+                        </td>
+                        <td class="p-0 m-0">
+                            <span>
+                                <img src="{% static 'dist/img/AdminLTELogo.png' %}" width="50" alt="">
+                            </span>
+                        </td>
+                        <td class="border-right">Fashion</td>
+                        <td>
+                            <span>
+                                <i class="fas fa-star"></i>
+                                0
+                            </span>
+                        </td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td><i class="fas fa-trash"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+{% endblock content %} {% block javascript %} {{ block.super }} {% endblock javascript %}
