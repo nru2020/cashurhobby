@@ -1,2 +1,2 @@
 # cashurhobby
-ecommerce website
+e-commerce website
