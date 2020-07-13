@@ -1,4 +1,4 @@
-{% extends 'lib/base.html' %} {% load static %} {% block title %} Marketing {% endblock title %} {% block stylesheet %} {{ block.super }} {% endblock stylesheet %} {% block content %}
+{% extends 'lib/base.html' %} {% load static %} {% block title %} Catagory {% endblock title %} {% block stylesheet %} {{ block.super }} {% endblock stylesheet %} {% block content %}
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -51,7 +51,7 @@
                             </span>
                         </td>
                         <td class="px-1">
-                            <span>
+                            <span class="text-success">
                                 <i class="fas fa-power-off"></i>
                             </span>
                         </td>
@@ -60,16 +60,16 @@
                                 <img src="{% static 'dist/img/AdminLTELogo.png' %}" width="50" alt="">
                             </span>
                         </td>
-                        <td class="border-right">Fashion</td>
+                        <td class="border-right"><a href="?">Fashion</a></td>
                         <td>
                             <span>
-                                <i class="fas fa-star"></i>
-                                0
+                                <i class="text-warning fas fa-star"></i>
+                                <a href="?">0</a>
                             </span>
                         </td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td><i class="fas fa-trash"></i></td>
+                        <td><a href="?">0</a></td>
+                        <td><a href="?">0</a></td>
+                        <td><a href="delete/2/"><i class="fas fa-trash-alt"></i></a></td>
                     </tr>
                 </tbody>
             </table>
