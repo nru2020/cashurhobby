@@ -11,7 +11,7 @@ def pages(request):
         template = loader.get_template(load_template)
     except:
         # 404!
-        template = loader.get_template('pages/examples/404.html')
+        template = loader.get_template('pages/404.html')
     return HttpResponse(template.render(context, request))
 
 def home(request):
