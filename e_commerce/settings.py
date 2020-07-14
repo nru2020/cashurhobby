@@ -24,8 +24,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'app'
+    'app',
+    'django_summernote',
 ]
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -112,3 +115,6 @@ USE_TZ = True
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'e_commerce/static')]
 STATIC_URL = '/static/'
 # STATIC_ROOT = STATIC_ROOT_PATH
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

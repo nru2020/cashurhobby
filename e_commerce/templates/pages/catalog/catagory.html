@@ -18,6 +18,11 @@
 </section>
 
 <div class="col-12">
+
+    <div class="my-3">
+        <button class="btn btn-outline-primary border-secondary" data-toggle="modal" data-target="#add_cat">Add Catagory</button>
+    </div>
+
     <div class="card">
         <div class="card-header">
             <div class="card-title">Catagory</div>
@@ -60,7 +65,7 @@
                                 <img src="{% static 'dist/img/AdminLTELogo.png' %}" width="50" alt="">
                             </span>
                         </td>
-                        <td class="border-right"><a href="?">Fashion</a></td>
+                        <td class="border-right"><a href="/pages/catalog/cat_details.html">Fashion</a></td>
                         <td>
                             <span>
                                 <i class="text-warning fas fa-star"></i>
@@ -78,4 +83,28 @@
     </div>
     <!-- /.card -->
 </div>
+
+
+<!-- Modal add catagory -->
+<div class="modal fade" id="add_cat" tabindex="-1" role="dialog" aria-labelledby="add_cat" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Catagory</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Add catagory</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal add catagory end -->
+
 {% endblock content %} {% block javascript %} {{ block.super }} {% endblock javascript %}

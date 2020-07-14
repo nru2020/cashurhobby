@@ -2,9 +2,11 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.template import loader
 
+from .forms import CatagoryForm
 
 def pages(request):
-    context = {}
+    x = CatagoryForm()
+    context = {'editor_summernote':x}
     try:        
         load_template = request.path[1:]
         # print(request.path, load_template)
