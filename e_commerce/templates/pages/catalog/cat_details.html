@@ -1,4 +1,5 @@
-{% extends 'lib/base.html' %} {% load static %} {% block title %} Catagory details {% endblock title %} {% block stylesheet %} {{ block.super }} {% endblock stylesheet %} {% block content %}
+{% extends 'lib/base.html' %} {% load static %} {% block title %} Catagory details {% endblock title %} {% block stylesheet %} {{ block.super }}
+<link rel="stylesheet" href="{% static 'css/catalog/cat_details.css' %}">{% endblock stylesheet %} {% block content %}
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -76,9 +77,23 @@
                                         <label for="par_icon" class="col-sm-2 col-form-label">Category icon </label>
                                         <div class="col-sm-10">
                                             <div class="row">
-                                                <div class="col-6 text-center"><img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="Category_icon" class="brand-image img-circle elevation-3">
+                                                <div class="col">
+
+                                                    <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="Category_icon" class="brand-image cat_icon elevation-2">
+                                                    <div class="icon" data-toggle="dropdown">
+                                                        <span><i class="fas fa-edit"></i></span>
+                                                        <div class="dropdown-menu dropdown-menu-sm">
+                                                            <li>
+                                                                <a href="#" class="dropdown-item"> <i class="far fa-image"></i> View image</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="" class="dropdown-item"><i class="fas fa-upload"></i> From computer</a>
+                                                                <input type="file" name="" id="" hidden>
+                                                            </li>
+                                                        </div>
+                                                    </div>
+
                                                 </div>
-                                                <div class="col-6" style="text-align: center; margin:auto;"><input type="file" class=""></div>
                                             </div>
                                         </div>
                                     </div>

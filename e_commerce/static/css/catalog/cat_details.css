@@ -1,0 +1,21 @@
+.cat_icon {
+    position: relative;
+    border: 1px solid darkcyan;
+    vertical-align: middle;
+}
+
+.icon {
+    position: absolute;
+    bottom: 5px;
+    left: 110px;
+    border-radius: 2px;
+    padding: 0 4px;
+    background: #fff;
+    color: darkcyan;
+    cursor: pointer;
+}
+
+.icon:hover {
+    background-color: rgba(0, 139, 139, 0.103);
+    border-radius: 4px;
+}
