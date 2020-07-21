@@ -1,7 +1,8 @@
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.template import loader
-from .models import Catagory
+from .models import Catagory, SubCatagory
 from .forms import CatagoryForm
 
 def pages(request):
@@ -26,6 +27,7 @@ def pages(request):
 def home(request):
     return render(request, 'pages/index.html')
 
+# CRUD Catagory
 def add_catagory(request):
     if request.method == 'POST':
         try:
@@ -50,6 +52,11 @@ def delete_catagory(request, ID):
 def detail_catagory(request, ID):
     if Catagory.objects.filter(id=ID).exists():
         obj = Catagory.objects.get(id=ID)
-        print(obj)
+    
+        context = {
+            'sub_catagory': SubCatagory.objects.filter(pk=ID).order_by('-id'),
+            'update_catagory_form': CatagoryForm(instance=obj)
+        }
+        return render(request, 'pages/catalog/cat_details.html', context)
     return HttpResponseRedirect('/pages/catalog/catagory.html')    
     
