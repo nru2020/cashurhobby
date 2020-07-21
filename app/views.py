@@ -1,7 +1,7 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template import loader
-
+from .models import Catagory
 from .forms import CatagoryForm
 
 def pages(request):
@@ -9,12 +9,47 @@ def pages(request):
     context = {'editor_summernote':x}
     try:        
         load_template = request.path[1:]
-        # print(request.path, load_template)
+        file_name = request.path.split('/')[-1].split('.')[0]
+
+        # file with data binding
+        if (file_name == 'catagory'):
+            context['catagory'] = Catagory.objects.all().order_by('-id')
+
+
         template = loader.get_template(load_template)
     except:
         # 404!
         template = loader.get_template('pages/404.html')
     return HttpResponse(template.render(context, request))
 
+
 def home(request):
     return render(request, 'pages/index.html')
+
+def add_catagory(request):
+    if request.method == 'POST':
+        try:
+            catagory_name= request.POST['catagory']
+            obj = Catagory.objects.create(
+                cat_name=catagory_name
+            )
+            if obj is None:
+                return JsonResponse({'success':False, 'msg': 'Something went wrong! Not saved!'})
+            return JsonResponse({'success':True, 'msg': 'Successfully Added!'})
+        except:
+            pass
+    return JsonResponse({'success':False})
+
+def delete_catagory(request, ID):
+    if Catagory.objects.filter(id=ID).exists():
+        obj = Catagory.objects.get(id=ID)
+        obj.delete()
+        return HttpResponseRedirect('/pages/catalog/catagory.html')    
+    return HttpResponseRedirect('/pages/catalog/catagory.html')    
+
+def detail_catagory(request, ID):
+    if Catagory.objects.filter(id=ID).exists():
+        obj = Catagory.objects.get(id=ID)
+        print(obj)
+    return HttpResponseRedirect('/pages/catalog/catagory.html')    
+    
