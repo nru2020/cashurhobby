@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.template import loader
 from .models import Catagory, SubCatagory
-from .forms import CatagoryForm
+from .forms import CatagoryForm, SubCatagoryForm
 
 def pages(request):
     x = CatagoryForm()
@@ -16,7 +16,6 @@ def pages(request):
         if (file_name == 'catagory'):
             context['catagory'] = Catagory.objects.all().order_by('-id')
 
-
         template = loader.get_template(load_template)
     except:
         # 404!
@@ -27,6 +26,8 @@ def pages(request):
 def home(request):
     return render(request, 'pages/index.html')
 
+
+""" Catagory """
 # CRUD Catagory
 def add_catagory(request):
     if request.method == 'POST':
@@ -54,9 +55,44 @@ def detail_catagory(request, ID):
         obj = Catagory.objects.get(id=ID)
     
         context = {
-            'sub_catagory': SubCatagory.objects.filter(pk=ID).order_by('-id'),
+            'sub_catagory': SubCatagory.objects.filter(par_cat=Catagory.objects.get(pk=ID)).order_by('-id'),
             'update_catagory_form': CatagoryForm(instance=obj)
         }
         return render(request, 'pages/catalog/cat_details.html', context)
     return HttpResponseRedirect('/pages/catalog/catagory.html')    
-    
+
+
+""" Sub Catagory """
+# subcatagory
+def add_subcatagory(request):
+    if request.method == 'POST':
+        try:
+            catagory_name = request.POST['catagory']
+            parent_catagory = request.POST['par_cat']
+            obj = SubCatagory.objects.create(
+                cat_name=catagory_name,
+                par_cat=Catagory.objects.get(pk=parent_catagory)
+            )
+            
+            if obj is None:
+                return JsonResponse({'success':False, 'msg': 'Something went wrong! Not saved!'})
+            return JsonResponse({'success':True, 'msg': 'Successfully Added!'})
+        except:
+            pass
+    return JsonResponse({'success':False})
+
+def delete_subcatagory(request, ID):
+    if SubCatagory.objects.filter(id=ID).exists():
+        obj = SubCatagory.objects.get(id=ID)
+        obj.delete()
+        return JsonResponse({'success': True})
+    return JsonResponse({'success': False})
+
+def details_subcatagory(request, ID):
+    if SubCatagory.objects.filter(id=ID).exists():
+        obj = SubCatagory.objects.get(id=ID)    
+        context = {
+            'update_subcatagory_form': SubCatagoryForm(instance=obj)
+        }
+        return render(request, 'pages/catalog/sub_cat_details.html', context)
+    return HttpResponseRedirect('/pages/catalog/catagory.html')    

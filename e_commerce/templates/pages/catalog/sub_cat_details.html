@@ -11,8 +11,6 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item"><a href="/pages/catalog/catagory.html">Catagory</a></li>
-                    <li class="breadcrumb-item"><a href="/pages/catalog/cat_details.html">Catagory details</a></li>
                     <li class="breadcrumb-item active">Sub-Catagory details</li>
                 </ol>
             </div>
@@ -26,23 +24,28 @@
             <div class="form-group row">
                 <label for="cat_name" class="col-sm-2 col-form-label">Catagory Name <span class="text-danger">*</span></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="cat_name" placeholder="catagory name">
+                    <input type="text" class="form-control" id="cat_name" value="{{update_subcatagory_form.cat_name.value}}" placeholder="catagory name">
                 </div>
             </div>
 
             <div class="form-group row">
                 <label for="par_cat" class="col-sm-2 col-form-label">Parent category <span class="text-danger">*</span></label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="par_cat" placeholder="parent catagory">
+                    <select name="" class="form-control" id="par_cat">
+                        {% for i in update_subcatagory_form.par_cat %}
+                        {{i}}
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="cat_tilte" class="col-sm-2 col-form-label">Show category title </label>
                 <div class="col-sm-10">
-                    <select name="" class="form-control" id="">
-                            <option value="">Show</option>
-                            <option value="">Hide</option>
-                        </select>
+                    <select name="" class="form-control" id="par_cat">
+                        {% for i in update_subcatagory_form.cat_title %}
+                        {{i}}
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
 
@@ -52,20 +55,14 @@
                     <div class="row">
                         <div class="col">
 
-                            <img src="{% static 'dist/img/AdminLTELogo.png' %}" alt="Category_icon" class="brand-image cat_icon elevation-2">
-                            <div class="icon" data-toggle="dropdown">
-                                <span><i class="fas fa-edit"></i></span>
-                                <div class="dropdown-menu dropdown-menu-sm">
-                                    <li>
-                                        <a href="#" class="dropdown-item"> <i class="far fa-image"></i> View image</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="dropdown-item"><i class="fas fa-upload"></i> From computer</a>
-                                        <input type="file" name="" id="" hidden>
-                                    </li>
+                            <div class="dropdown">
+                                <img src="{{ update_subcatagory_form.cat_icon.value.url }}" alt="Category_icon" class="brand-image cat_icon elevation-2" width="100">
+                                <div class="dropdown-content">
+                                    <a href="{{update_subcatagory_form.cat_icon.value.url}}" target="_blank" class="dropdown-item"> <i class="far fa-image"></i> View image</a>
+                                    <a><input type="file" name="" id=""></a>
                                 </div>
-
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -75,7 +72,7 @@
                 <label for="description" class="col-sm-2 col-form-label">Description </label>
                 <div class="col-sm-10">
                     <!-- editor -->
-                    {{editor_summernote.desc}}
+                    {{update_subcatagory_form.cat_desc |safe }}
                     <!-- editor end -->
                 </div>
             </div>
@@ -83,19 +80,20 @@
             <div class="form-group row">
                 <label for="clean_url" class="col-sm-2 col-form-label">Clean URL </label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="clean_url" placeholder="Clean URL">
+                    <input type="text" class="form-control" value="{{update_subcatagory_form.clr_url.value }}" id="clean_url" placeholder="Clean URL">
+                    <a href="{{update_catagory_form.clr_url.value}}"><b class="text-secondary">Result:</b> <small>{{update_catagory_form.clr_url.value}}</small></a>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="meta_keywords" class="col-sm-2 col-form-label">Meta keywords </label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="meta_keywords" placeholder="Meta keywords">
+                    <input type="text" class="form-control" value="{{update_subcatagory_form.meta_key.value}}" id="meta_keywords" placeholder="Meta keywords">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="meta_desc" class="col-sm-2 col-form-label">Meta description </label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="meta_desc" placeholder="Meta description">
+                    <input type="text" class="form-control" value="{{update_subcatagory_form.meta_desc.value }}" id="meta_desc" placeholder="Meta description">
                 </div>
             </div>
 
@@ -103,17 +101,19 @@
                 <label for="enabled" class="col-sm-2 col-form-label">Enabled </label>
                 <div class="mt-1 col-sm-10">
                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input" style="height: 20px; width:20px;" id="enabled">
+                        {% if update_subcatagory_form.is_enable.value %}
+                        <input type="checkbox" class="form-check-input" style="height: 20px; width:20px;" id="enabled" checked> {% else %}
+                        <input type="checkbox" class="form-check-input" style="height: 20px; width:20px;" id="enabled"> {% endif %}
                     </div>
                 </div>
             </div>
             <div class="mt-4">
                 <button type="submit" class="btn btn-info">Update</button>
-                <button type="submit" class="btn btn-default float-right">Cancel</button>
+                <button onclick="window.history.go(-1); return false;" class="btn btn-default float-right">Back</button>
             </div>
         </div>
     </form>
     <!-- /.form 1 end -->
 
 </div>
-{% endblock content %} {% block javascript %} {{ block.super }} {% endblock javascript %}
+{% block javascript %} {{ block.super }} {% endblock javascript %} {% endblock content %}

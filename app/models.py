@@ -22,7 +22,7 @@ class Catagory(models.Model):
     cat_name  = models.CharField(max_length=50, unique=True)
     par_cat   = models.ForeignKey(RootCatagory, on_delete=models.CASCADE, null=True)
     cat_title = models.CharField(choices=[('show', 'show'), ('hide', 'hide')], max_length=4, null=True)
-    cat_icon  = models.ImageField(upload_to='cat_icons',default="cat_icons/AdminLTELogo.png")
+    cat_icon  = models.ImageField(upload_to='cat_icons', default="cat_icons/AdminLTELogo.png")
     cat_desc  = models.TextField(null=True)
     clr_url   = models.CharField(max_length=50, null=True)
     is_enable = models.BooleanField(max_length=50, default=True)
@@ -41,15 +41,15 @@ class Catagory(models.Model):
 class SubCatagory(models.Model):
     """Model definition for SubCatagory."""
 
-    cat_name  = models.CharField(max_length=50)
-    par_cat   = models.ForeignKey(Catagory, on_delete=models.CASCADE)
-    cat_title = models.CharField(choices=[('show', 'show'), ('hide', 'hide')], max_length=4)
-    cat_icon  = models.ImageField(upload_to='cat_icons')
-    cat_desc  = models.TextField()
-    clr_url   = models.CharField(max_length=50)
-    is_enable = models.BooleanField(max_length=50)
-    meta_key = models.CharField(max_length=50) 
-    meta_desc = models.CharField(max_length=50) 
+    cat_name  = models.CharField(max_length=50, unique=True)
+    par_cat   = models.ForeignKey(Catagory, on_delete=models.CASCADE, null=True)
+    cat_title = models.CharField(choices=[('show', 'show'), ('hide', 'hide')], max_length=4, null=True)
+    cat_icon  = models.ImageField(upload_to='cat_icons', default="cat_icons/AdminLTELogo.png")
+    cat_desc  = models.TextField(null=True)
+    clr_url   = models.CharField(max_length=50, null=True)
+    is_enable = models.BooleanField(max_length=50, default=True)
+    meta_key = models.CharField(max_length=50, null=True) 
+    meta_desc = models.CharField(max_length=50, null=True) 
 
     class Meta:
         """Meta definition for SubCatagory."""
