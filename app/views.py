@@ -89,6 +89,25 @@ def delete_subcatagory(request, ID):
     return JsonResponse({'success': False})
 
 def details_subcatagory(request, ID):
+    if request.method == 'POST':
+        form = SubCatagoryForm(data=request.POST, files=request.FILES, instance=SubCatagory.objects.get(id=ID))
+
+        if form.is_valid():
+            form.save()
+            # print(
+            # form.cleaned_data.get('cat_name'),
+            # form.cleaned_data.get('par_cat'),
+            # form.cleaned_data.get('cat_title'),
+            # form.cleaned_data.get('cat_icon'),
+            # form.cleaned_data.get('cat_desc'),
+            # form.cleaned_data.get('clr_url'),
+            # form.cleaned_data.get('meta_key'),
+            # form.cleaned_data.get('meta_desc'),
+            # form.cleaned_data.get('is_enable')
+            # )
+            return JsonResponse({'success': True})
+        return JsonResponse({'success': False})
+
     if SubCatagory.objects.filter(id=ID).exists():
         obj = SubCatagory.objects.get(id=ID)    
         context = {

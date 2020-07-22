@@ -13,6 +13,7 @@ class CatagoryForm(forms.ModelForm):
         fields = "__all__" 
 
 class SubCatagoryForm(forms.ModelForm):
+    # par_cat = forms.ModelChoiceField(queryset=Catagory.objects.all())
     class Meta:
         model = SubCatagory
         widgets = {
