@@ -1,6 +1,6 @@
 from django import forms
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
-from .models import Catagory, SubCatagory
+from .models import Catagory, SubCatagory, Products
 
 # Apply summernote to specific fields.
 class CatagoryForm(forms.ModelForm):
@@ -13,10 +13,14 @@ class CatagoryForm(forms.ModelForm):
         fields = "__all__" 
 
 class SubCatagoryForm(forms.ModelForm):
-    # par_cat = forms.ModelChoiceField(queryset=Catagory.objects.all())
     class Meta:
         model = SubCatagory
         widgets = {
             'cat_desc': SummernoteWidget()
             }
+        fields = "__all__" 
+
+class ProductsForm(forms.ModelForm):
+    class Meta:
+        model = Products
         fields = "__all__" 

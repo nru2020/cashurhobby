@@ -1,0 +1,250 @@
+{% extends 'lib/base.html' %} {% load static %} {% block title %} Catagory details {% endblock title %} {% block stylesheet %} {{ block.super }}
+<link rel="stylesheet" href="{% static 'css/catalog/products.css' %}">
+<!-- Toastr -->
+<link rel="stylesheet" href="{% static 'plugins/toastr/toastr.min.css' %}"> {% endblock stylesheet %} {% block content %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Products details</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Products details</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-primary card-tabs">
+                <div class="card-header p-0 pt-1">
+                    <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Basic info </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Prices & Inventory</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-one-messages-tab" data-toggle="pill" href="#custom-tabs-one-messages" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false">Shipping</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-one-settings-tab" data-toggle="pill" href="#custom-tabs-one-settings" role="tab" aria-controls="custom-tabs-one-settings" aria-selected="false">Related Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="product_review-tab" data-toggle="pill" href="#product_review" role="tab" aria-controls="product_review" aria-selected="false">Product Review</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="custom-tabs-one-tabContent">
+                        <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
+                            <!-- form start -->
+                            <form id="update_product" enctype="multipart/form-data" method="POST" class="form-horizontal mx-5">
+                                {% csrf_token %}
+                                <div class="m-5">
+                                    <div class="form-group row">
+                                        <label for="product_name" class="col-sm-2 col-form-label">Products Name <span
+                                                class="text-danger">*</span></label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="product_name" title="product Name" class="form-control" id="cat_name" value="{{update_products_form.prod_name.value}}" placeholder="Product name">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="sku" class="col-sm-2 col-form-label">SKU <span
+                                                class="text-danger">*</span></label>
+                                        <div class="col-sm-10">
+                                            <input type="text" name="sku" title="SKU" class="form-control" id="sku" value="{{update_products_form.sku.value}}" placeholder="SKU">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="catagory" class="col-sm-2 col-form-label">Category <span
+                                                class="text-danger">*</span></label>
+                                        <div class="col-sm-10">
+                                            <select name="catagory" id="catagory" class="form-control">
+                                                {% for i in update_products_form.catagory %}
+                                                    {{i}}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="prod_img" class="col-sm-2 col-form-label">Product Image </label>
+                                        <div class="col-sm-10">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="dropdown">
+                                                        <img src="{{ update_products_form.prod_img.value.url }}" alt="prod_img" class="brand-image cat_icon elevation-2" width="100">
+                                                        <div class="dropdown-content">
+                                                            <a href="{{ update_products_form.prod_img.value.url }}" target="_blank" class="dropdown-item"> <i class="far fa-image"></i> View image</a>
+                                                            <a><input type="file" name="prod_img" id="prod_img"></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="is_attach_file" class="col-sm-2 col-form-label">Allow buyers to attach files to this product</label>
+                                        <div class="col-sm-10 pt-2">
+                                            <select name="" id="" class="form-control">
+                                                {% for i in update_products_form.allow_to_attach_file %}
+                                                    {{i}}
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </form>
+                            <!-- /.form 1 end -->
+
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
+                            tab2
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
+                            Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio. Cras nec augue
+                            ipsum. Suspendisse ut velit condimentum, mattis urna a, malesuada nunc. Curabitur eleifend facilisis velit finibus tristique. Nam vulputate, eros non luctus efficitur, ipsum odio volutpat massa, sit amet sollicitudin est libero
+                            sed ipsum. Nulla lacinia, ex vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum metus arcu vel metus. Curabitur eget sem eu risus tincidunt eleifend ac ornare magna.
+                        </div>
+                        <div class="tab-pane fade" id="custom-tabs-one-settings" role="tabpanel" aria-labelledby="custom-tabs-one-settings-tab">
+                            Pellentesque vestibulum commodo nibh nec blandit. Maecenas neque magna, iaculis tempus turpis ac, ornare sodales tellus. Mauris eget blandit dolor. Quisque tincidunt venenatis vulputate. Morbi euismod molestie tristique. Vestibulum consectetur dolor a
+                            vestibulum pharetra. Donec interdum placerat urna nec pharetra. Etiam eget dapibus orci, eget aliquet urna. Nunc at consequat diam. Nunc et felis ut nisl commodo dignissim. In hac habitasse platea dictumst. Praesent imperdiet
+                            accumsan ex sit amet facilisis.
+                        </div>
+                        <div class="tab-pane fade" id="product_review" role="tabpanel" aria-labelledby="product_review-tab">
+                            tab4
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block javascript %} {{ block.super }}
+<script src="{% static 'Plugins/jquery/jquery.min.js' %}"></script>
+<!-- Toastr -->
+<script src="{% static 'plugins/toastr/toastr.min.js' %}"></script>
+<script>
+    //add catagory
+    $(document).ready(function() {
+        $('#save_subcat').css('display', 'none');
+        let new_row = `<td class="px-1"> <span class="handle"> <i class="fas fa-ellipsis-v"></i> <i class="fas fa-ellipsis-v"></i> </span> </td> <td class="px-1"> <span class="text-success"> <i class="fas fa-power-off"></i> </span> </td> <td class="p-0 m-0"> <span> <img src="{% static 'dist/img/AdminLTELogo.png' %}" width="50" alt=""> </span> </td> <td class="border-right"> <input type="text" id="subcat_name" name="catagory" class="form-control"> </td> <td> <span> <i class="text-warning fas fa-star"></i> <a href="?">0</a> </span> </td> <td><a href="?">0</a></td> <td><a href="?">0</a></td> <td><a href="delete/2/"><i class="fas fa-trash-alt"></i></a></td>`
+
+        $("#add_subcat").click(function() {
+            $('#add_subcat').prop('disabled', 'true');
+            $('#save_subcat').css('display', 'block');
+
+            markup = "<tr> " + new_row + "</tr>";
+            tableBody = $("table tbody");
+            tableBody.prepend(markup);
+        });
+
+        $('#save_subcat').click(function() {
+            var x = $('#subcat_name').val()
+            var pathname = window.location.pathname;
+            var parent_catagory = getLastPartOfUrl(pathname)
+
+            if (x == '') {
+                alert('Please enter catagory name!');
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'add_subcat' %}",
+                    data: {
+                        par_cat: parent_catagory,
+                        catagory: x,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(res) {
+                        if (res.success) {
+                            location.reload();
+                        } else {
+                            alert("Not valid catagory name.")
+                        }
+                    }
+                });
+            }
+        })
+    })
+
+    function getLastPartOfUrl(url) {
+        var urlsplit = url.split("/");
+        var lastpart = urlsplit[urlsplit.length - 1];
+        if (lastpart === '') {
+            lastpart = urlsplit[urlsplit.length - 2];
+        }
+        return lastpart;
+    }
+
+    // delete sub-catagory
+    function delete_subcatagory(ID) {
+        x = confirm('Do you want to Delete?')
+        if (x) {
+            $.ajax({
+                type: "GET",
+                url: ID,
+                data: {},
+                success: function(res) {
+                    if (res.success) {
+                        location.reload();
+                    } else {
+                        alert("Something went wrong!")
+                    }
+                }
+            });
+        }
+    }
+
+    //update form catagory-details
+    $('#update_catagory').on('submit', function(event) {
+        event.preventDefault();
+        update_catagory();
+    });
+
+    function update_catagory() {
+        var data = new FormData($('#update_catagory').get(0));
+        data['csrfmiddlewaretoken'] = '{{ csrf_token }}'
+        $.ajax({
+            url: "",
+            type: "POST",
+            data: data,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function(res) {
+                if (res.success) {
+                    toastr.success('Successfully Updated!')
+                } else {
+                    toastr.warning('form is not valid!')
+                }
+            },
+            // handle a non-successful response
+            error: function(xhr, errmsg, err) {
+                toastr.error('Error!.')
+            }
+        });
+        return false;
+    }
+
+    //enable disable catagory
+    function enable_subcatagory(ID) {
+        $(`#enable_subcat-${ID}`).toggleClass('text-success')
+    }
+</script>
+{% endblock javascript %} {% endblock content %}

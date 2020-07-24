@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.template import loader
 from .models import Catagory, SubCatagory, Products
-from .forms import CatagoryForm, SubCatagoryForm
+from .forms import CatagoryForm, SubCatagoryForm, ProductsForm
 
 
 def pages(request):
@@ -120,3 +120,11 @@ def details_subcatagory(request, ID):
 
 
 """ Products """
+def products_details(request, ID):
+    if Products.objects.filter(id=ID).exists():
+        obj = Products.objects.get(id=ID)    
+        context = {
+            'update_products_form': ProductsForm(instance=obj)
+        }
+        return render(request, 'pages/catalog/product_detail.html', context)
+    return HttpResponseRedirect('/pages/catalog/products.html')    

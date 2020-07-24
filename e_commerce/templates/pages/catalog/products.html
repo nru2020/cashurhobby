@@ -1,4 +1,12 @@
-{% extends 'lib/base.html' %} {% load static %} {% block title %} Products {% endblock title %} {% block stylesheet %} {{ block.super }} {% endblock stylesheet %} {% block content %}
+{% extends 'lib/base.html' %} {% load static %} {% block title %} Products {% endblock title %} {% block stylesheet %} {{ block.super }}
+<link rel="stylesheet" href="{% static 'css/catalog/products.css' %}"> {% endblock stylesheet %} {% block content %}
+
+<!-- 
+    <label class="switch">
+        <input type="checkbox" checked>
+        <span class="slider"></span>
+    </label>
+ -->
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -54,12 +62,12 @@
                     {% for i in products %}
                     <tr>
                         <td>{{i.id}}</td>
-                        <td><a href="/edit/{{i.name}}">{{i.prod_name}}</a></td>
+                        <td><a href="{% url 'product_details' ID=i.id %}">{{i.prod_name}}</a></td>
                         <td>{{i.arrival_date}}</td>
                         <td>{{i.catagory}}</td>
                         <td>{{i.quantity_in_stock}}</td>
                         <td>{{i.sell_price}}</td>
-                        <td><a href="/delete/{{i.id}}"><i class="fa fa-trash"></i></a></td>
+                        <td><a href="/delete/{{i.id}}"><i class="fa fa-trash-alt"></i></a></td>
                         <td>{{i.sku}}</td>
                     </tr>
                     {% endfor %}

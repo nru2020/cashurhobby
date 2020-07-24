@@ -16,5 +16,5 @@ urlpatterns = [
     path('detail_subcatagory/<int:ID>/', views.details_subcatagory, name="subcat_details"),
 
     # products
-    
+    path('product_details/<int:ID>/', views.products_details, name='product_details'),
 ]
