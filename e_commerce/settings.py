@@ -29,6 +29,7 @@ INSTALLED_APPS = [
 ]
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+SUMMERNOTE_THEME = 'bs4'  # Show summernote with Bootstrap4
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -87,7 +87,7 @@
                                                     <div class="dropdown">
                                                         <img src="{{ update_catagory_form.cat_icon.value.url }}" alt="Category_icon" class="brand-image cat_icon elevation-2" width="100">
                                                         <div class="dropdown-content">
-                                                            <a href="{{update_subcatagory_form.cat_icon.value.url}}" target="_blank" class="dropdown-item"> <i class="far fa-image"></i> View image</a>
+                                                            <a href="{{ update_catagory_form.cat_icon.value.url }}" target="_blank" class="dropdown-item"> <i class="far fa-image"></i> View image</a>
                                                             <a><input type="file" name="cat_icon" id="cat_icon"></a>
                                                         </div>
                                                     </div>
@@ -174,7 +174,7 @@
                                                     </span>
                                                 </td>
                                                 <td class="px-1">
-                                                    <span id="enable_cat" class="text-success" style="cursor: pointer;" onclick="enable_subcatagory('{{i.id}}')">
+                                                    <span id="enable_subcat-{{i.id}}" class="text-success" style="cursor: pointer;" onclick="enable_subcatagory('{{i.id}}')">
                                                         <i class="fas fa-power-off"></i>
                                                     </span>
                                                 </td>
@@ -196,7 +196,6 @@
                                                 <td><a onclick="delete_subcatagory(`{% url 'del_subcat' ID=i.id %}`);" href="#"><i class="fas fa-trash-alt"></i></a></td>
                                             </tr>
                                             {% endfor %}
-
 
                                         </tbody>
                                     </table>
@@ -328,6 +327,11 @@
             }
         });
         return false;
-    };
+    }
+
+    //enable disable catagory
+    function enable_subcatagory(ID) {
+        $(`#enable_subcat-${ID}`).toggleClass('text-success')
+    }
 </script>
 {% endblock javascript %} {% endblock content %}

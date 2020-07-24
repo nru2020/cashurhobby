@@ -5,9 +5,9 @@ from django.template import loader
 from .models import Catagory, SubCatagory
 from .forms import CatagoryForm, SubCatagoryForm
 
+
 def pages(request):
-    x = CatagoryForm()
-    context = {'editor_summernote':x}
+    context = {}
     try:        
         load_template = request.path[1:]
         file_name = request.path.split('/')[-1].split('.')[0]
@@ -37,11 +37,12 @@ def add_catagory(request):
                 cat_name=catagory_name
             )
             if obj is None:
-                return JsonResponse({'success':False, 'msg': 'Something went wrong! Not saved!'})
-            return JsonResponse({'success':True, 'msg': 'Successfully Added!'})
+                return JsonResponse({'success':False})
+            return JsonResponse({'success':True})
         except:
             pass
     return JsonResponse({'success':False})
+
 
 def delete_catagory(request, ID):
     if Catagory.objects.filter(id=ID).exists():
