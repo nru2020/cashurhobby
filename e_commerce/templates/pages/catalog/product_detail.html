@@ -1,5 +1,8 @@
 {% extends 'lib/base.html' %} {% load static %} {% block title %} Catagory details {% endblock title %} {% block stylesheet %} {{ block.super }}
 <link rel="stylesheet" href="{% static 'css/catalog/products.css' %}">
+<!-- Select2 -->
+<link rel="stylesheet" href="{% static 'plugins/select2/css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
 <!-- Toastr -->
 <link rel="stylesheet" href="{% static 'plugins/toastr/toastr.min.css' %}"> {% endblock stylesheet %} {% block content %}
 
@@ -70,11 +73,13 @@
                                         <label for="catagory" class="col-sm-2 col-form-label">Category <span
                                                 class="text-danger">*</span></label>
                                         <div class="col-sm-10">
-                                            <select name="catagory" id="catagory" class="form-control">
+                                            <div class="select2-purple">
+                                                <select name="catagory" multiple="multiple" data-placeholder="Select a State" id="catagory" class="select2" style="width: 100%;">
                                                 {% for i in update_products_form.catagory %}
                                                     {{i}}
                                                 {% endfor %}
                                             </select>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -98,11 +103,11 @@
                                     <div class="form-group row">
                                         <label for="is_attach_file" class="col-sm-2 col-form-label">Allow buyers to attach files to this product</label>
                                         <div class="col-sm-10 pt-2">
-                                            <select name="" id="" class="form-control">
-                                                {% for i in update_products_form.allow_to_attach_file %}
-                                                    {{i}}
-                                                {% endfor %}
-                                            </select>
+
+                                            <label class="switch">
+                                                <input id="allow_buyer_to_attach_file" type="checkbox">
+                                                <span class="slider"></span>
+                                              </label>
                                         </div>
                                     </div>
 
@@ -136,115 +141,24 @@
     </div>
 </div>
 
-{% block javascript %} {{ block.super }}
-<script src="{% static 'Plugins/jquery/jquery.min.js' %}"></script>
+{% block javascript %}
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
 <!-- Toastr -->
 <script src="{% static 'plugins/toastr/toastr.min.js' %}"></script>
+<script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
+
 <script>
-    //add catagory
-    $(document).ready(function() {
-        $('#save_subcat').css('display', 'none');
-        let new_row = `<td class="px-1"> <span class="handle"> <i class="fas fa-ellipsis-v"></i> <i class="fas fa-ellipsis-v"></i> </span> </td> <td class="px-1"> <span class="text-success"> <i class="fas fa-power-off"></i> </span> </td> <td class="p-0 m-0"> <span> <img src="{% static 'dist/img/AdminLTELogo.png' %}" width="50" alt=""> </span> </td> <td class="border-right"> <input type="text" id="subcat_name" name="catagory" class="form-control"> </td> <td> <span> <i class="text-warning fas fa-star"></i> <a href="?">0</a> </span> </td> <td><a href="?">0</a></td> <td><a href="?">0</a></td> <td><a href="delete/2/"><i class="fas fa-trash-alt"></i></a></td>`
-
-        $("#add_subcat").click(function() {
-            $('#add_subcat').prop('disabled', 'true');
-            $('#save_subcat').css('display', 'block');
-
-            markup = "<tr> " + new_row + "</tr>";
-            tableBody = $("table tbody");
-            tableBody.prepend(markup);
-        });
-
-        $('#save_subcat').click(function() {
-            var x = $('#subcat_name').val()
-            var pathname = window.location.pathname;
-            var parent_catagory = getLastPartOfUrl(pathname)
-
-            if (x == '') {
-                alert('Please enter catagory name!');
-            } else {
-                $.ajax({
-                    type: "POST",
-                    url: "{% url 'add_subcat' %}",
-                    data: {
-                        par_cat: parent_catagory,
-                        catagory: x,
-                        csrfmiddlewaretoken: '{{ csrf_token }}'
-                    },
-                    success: function(res) {
-                        if (res.success) {
-                            location.reload();
-                        } else {
-                            alert("Not valid catagory name.")
-                        }
-                    }
-                });
-            }
-        })
-    })
-
-    function getLastPartOfUrl(url) {
-        var urlsplit = url.split("/");
-        var lastpart = urlsplit[urlsplit.length - 1];
-        if (lastpart === '') {
-            lastpart = urlsplit[urlsplit.length - 2];
-        }
-        return lastpart;
+    $('.select2').select2();
+    if ('{{update_products_form.allow_to_attach_file.value}}') {
+        $('#allow_buyer_to_attach_file').prop('checked', 'true')
+    } else {
+        $('#allow_buyer_to_attach_file').prop('checked', 'false')
     }
 
-    // delete sub-catagory
-    function delete_subcatagory(ID) {
-        x = confirm('Do you want to Delete?')
-        if (x) {
-            $.ajax({
-                type: "GET",
-                url: ID,
-                data: {},
-                success: function(res) {
-                    if (res.success) {
-                        location.reload();
-                    } else {
-                        alert("Something went wrong!")
-                    }
-                }
-            });
-        }
-    }
-
-    //update form catagory-details
-    $('#update_catagory').on('submit', function(event) {
-        event.preventDefault();
-        update_catagory();
-    });
-
-    function update_catagory() {
-        var data = new FormData($('#update_catagory').get(0));
-        data['csrfmiddlewaretoken'] = '{{ csrf_token }}'
-        $.ajax({
-            url: "",
-            type: "POST",
-            data: data,
-            cache: false,
-            processData: false,
-            contentType: false,
-            success: function(res) {
-                if (res.success) {
-                    toastr.success('Successfully Updated!')
-                } else {
-                    toastr.warning('form is not valid!')
-                }
-            },
-            // handle a non-successful response
-            error: function(xhr, errmsg, err) {
-                toastr.error('Error!.')
-            }
-        });
-        return false;
-    }
-
-    //enable disable catagory
-    function enable_subcatagory(ID) {
-        $(`#enable_subcat-${ID}`).toggleClass('text-success')
-    }
+    //$('#allow_buyer_to_attach_file').click(function() {
+    //  var attach_file = $('#allow_buyer_to_attach_file').is(":checked")
+    // console.log(attach_file)
+    //})
 </script>
+
 {% endblock javascript %} {% endblock content %}

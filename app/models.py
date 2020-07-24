@@ -63,7 +63,7 @@ class SubCatagory(models.Model):
 
 class Products(models.Model):
     """basic information."""
-    catagory               = models.ForeignKey(SubCatagory, on_delete=models.CASCADE, null=True)
+    catagory               = models.ManyToManyField(SubCatagory, null=True)
     prod_name              = models.CharField(max_length=50, null=True)
     sku                    = models.CharField(max_length=50, null=True)
     weight                 = models.CharField(max_length=50, null=True)

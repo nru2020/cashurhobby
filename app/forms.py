@@ -21,6 +21,7 @@ class SubCatagoryForm(forms.ModelForm):
         fields = "__all__" 
 
 class ProductsForm(forms.ModelForm):
+    # catagory = forms.ModelMultipleChoiceField(queryset=SubCatagory.objects.all())
     class Meta:
         model = Products
         fields = "__all__" 

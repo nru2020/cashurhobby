@@ -64,7 +64,10 @@
                         <td>{{i.id}}</td>
                         <td><a href="{% url 'product_details' ID=i.id %}">{{i.prod_name}}</a></td>
                         <td>{{i.arrival_date}}</td>
-                        <td>{{i.catagory}}</td>
+                        <td>
+                            {% for j in i.catagory.all %}
+                            <li>{{j.cat_name}}</li> {% endfor %}
+                        </td>
                         <td>{{i.quantity_in_stock}}</td>
                         <td>{{i.sell_price}}</td>
                         <td><a href="/delete/{{i.id}}"><i class="fa fa-trash-alt"></i></a></td>
