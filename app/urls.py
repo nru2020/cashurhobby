@@ -15,4 +15,6 @@ urlpatterns = [
     path('del_subcatagory/<int:ID>/', views.delete_subcatagory, name="del_subcat"),
     path('detail_subcatagory/<int:ID>/', views.details_subcatagory, name="subcat_details"),
 
+    # products
+    
 ]

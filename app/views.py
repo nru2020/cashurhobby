@@ -2,7 +2,7 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.template import loader
-from .models import Catagory, SubCatagory
+from .models import Catagory, SubCatagory, Products
 from .forms import CatagoryForm, SubCatagoryForm
 
 
@@ -16,6 +16,9 @@ def pages(request):
         if (file_name == 'catagory'):
             context['catagory'] = Catagory.objects.all().order_by('-id')
 
+        if (file_name == 'products'):
+            context['products'] = Products.objects.all().order_by('-id')
+            
         template = loader.get_template(load_template)
     except:
         # 404!
@@ -114,3 +117,6 @@ def details_subcatagory(request, ID):
         }
         return render(request, 'pages/catalog/sub_cat_details.html', context)
     return HttpResponseRedirect('/pages/catalog/catagory.html')    
+
+
+""" Products """

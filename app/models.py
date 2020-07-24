@@ -63,15 +63,26 @@ class SubCatagory(models.Model):
 
 class Products(models.Model):
     """basic information."""
-    prod_name = models.CharField(max_length=50)
-    sku       = models.CharField(max_length=50)
-    catagory = models.ForeignKey(SubCatagory, on_delete=models.CASCADE)
-    prod_img = models.ImageField(upload_to='products')
-    prod_desc = models.TextField()
-    prod_size = models.CharField(choices=[('S', 'S'),('M', 'M'),('L', 'L')], max_length=2) 
-    allow_to_attach_file = models.BooleanField()
-    is_mandatory_to_attach = models.BooleanField()
-    is_avail_to_sell = models.BooleanField()
+    catagory               = models.ForeignKey(SubCatagory, on_delete=models.CASCADE, null=True)
+    prod_name              = models.CharField(max_length=50, null=True)
+    sku                    = models.CharField(max_length=50, null=True)
+    weight                 = models.CharField(max_length=50, null=True)
+    sell_price             = models.CharField(max_length=50, null=True)
+    prod_size              = models.CharField(choices=[('S', 'S'),('M', 'M'),('L', 'L')], max_length=2, null=True) 
+    
+    arrival_date           = models.DateField(null=True)
+    prod_img               = models.ImageField(upload_to='products', null=True)
+    prod_desc              = models.TextField(null=True)
+
+    shipping_price         = models.IntegerField(null=True)
+    quantity_in_stock      = models.IntegerField(null=True)
+
+    req_shipping           = models.BooleanField(null=True)
+    is_free                = models.BooleanField(null=True)
+    is_inventory_track     = models.BooleanField(null=True)
+    allow_to_attach_file   = models.BooleanField(null=True)
+    is_mandatory_to_attach = models.BooleanField(null=True)
+    is_avail_to_sell       = models.BooleanField(null=True)
 
     class Meta:
         """Meta definition for Products."""
@@ -117,7 +128,6 @@ class ProductsReview(models.Model):
     reviewer_name = models.CharField(max_length=50)
     text_of_review = models.CharField(max_length=50)
 
-
     class Meta:
         """Meta definition for Products."""
 
@@ -127,44 +137,3 @@ class ProductsReview(models.Model):
     def __str__(self):
         """Unicode representation of Products."""
         return self.prod_name
-
-
-class PriceInventory(models.Model):
-    """Model definition for PriceInventory."""
-
-    prod_id = models.ForeignKey(Products, on_delete=models.CASCADE)
-    price = models.CharField(max_length=50)
-    sell_price = models.CharField(max_length=50)
-    arrival_date = models.DateField()
-    is_inventory_track = models.BooleanField()
-    quantity_in_stock = models.IntegerField()
-
-    class Meta:
-        """Meta definition for PriceInventory."""
-
-        verbose_name = 'PriceInventory'
-        verbose_name_plural = 'PriceInventory'
-
-    # def __str__(self):
-    #     """Unicode representation of PriceInventory."""
-    #     return self.sell_price
-
-
-class Shippings(models.Model):
-    """Model definition for Shippings."""
-
-    prod_id = models.ForeignKey(Products, on_delete=models.CASCADE)
-    weight = models.CharField(max_length=50)
-    req_shipping = models.BooleanField()
-    price = models.IntegerField()
-    is_free = models.BooleanField()
-
-    class Meta:
-        """Meta definition for Shippings."""
-
-        verbose_name = 'Shippings'
-        verbose_name_plural = 'Shippings'
-
-    # def __str__(self):
-    #     """Unicode representation of Shippings."""
-    #     return ''

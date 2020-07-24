@@ -38,44 +38,33 @@
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
             <table class="table text-nowrap">
-                <thead class="text-center">
-                    <th colspan="4">Products</th>
-                    <th>Featured</th>
-                    <th>Subcat</th>
-                    <th colspan="2">Products <i class="fas fa-question-circle"></i></th>
-                </thead>
-                <tbody class="text-center" id="tboday">
-
+                <thead>
                     <tr>
-                        <td class="px-1">
-                            <!-- drag handle -->
-                            <span class="handle">
-                            <i class="fas fa-ellipsis-v"></i>
-                            <i class="fas fa-ellipsis-v"></i>
-                            </span>
-                        </td>
-                        <td class="px-1">
-                            <span id="enable_cat" class="text-success" style="cursor: pointer;" onclick="enable_catagory('')">
-                                <i class="fas fa-power-off"></i>
-                            </span>
-                        </td>
-                        <td class="p-0 m-0">
-                            <span>
-                                <img src="{% static 'dist/img/AdminLTELogo.png' %}" width="50" alt="">
-                            </span>
-                        </td>
-                        <td class="border-right"><a href="">ProductsName</a></td>
-                        <td>
-                            <span>
-                                <i class="text-warning fas fa-star"></i>
-                                <a href="?">0</a>
-                            </span>
-                        </td>
-                        <td><a href="?">0</a></td>
-                        <td><a href="?">0</a></td>
-                        <td><a onclick="delete_catagory(``);" href="#"><i class="fas fa-trash-alt"></i></a></td>
+                        <th>Product ID</th>
+                        <th>Product Name</th>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>In Stock</th>
+                        <th>Sell Price</th>
+                        <th>Delete</th>
+                        <th>SKU</th>
                     </tr>
-
+                </thead>
+                <tbody id="tboday">
+                    {% for i in products %}
+                    <tr>
+                        <td>{{i.id}}</td>
+                        <td><a href="/edit/{{i.name}}">{{i.prod_name}}</a></td>
+                        <td>{{i.arrival_date}}</td>
+                        <td>{{i.catagory}}</td>
+                        <td>{{i.quantity_in_stock}}</td>
+                        <td>{{i.sell_price}}</td>
+                        <!-- <td>{{i.SKU}}</td> -->
+                        <td><a href="/delete/{{i.id}}"><i class="fa fa-trash"></i></a></td>
+                        <td>{{i.sku}}</td>
+                        <!-- <td><a href="/edit/{{i.id}}"><i class="fa fa-edit"></i></a></td> -->
+                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
