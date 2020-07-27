@@ -102,27 +102,68 @@
                                     <div class="form-group row">
                                         <label for="is_attach_file" class="col-sm-2 col-form-label">Allow buyers to attach files to this product</label>
                                         <div class="col-sm-10 pt-2">
-
                                             <label class="switch">
-                                                <input id="allow_buyer_to_attach_file" type="checkbox">
+                                                <input id="allow_buyer_to_attach_file" name="allow_buyer_to_attach_file" type="checkbox">
                                                 <span class="slider"></span>
                                               </label>
                                         </div>
                                     </div>
 
+                                    <div class="form-group row">
+                                        <label for="is_avail_to_sell" class="col-sm-2 col-form-label">Available for sale</label>
+                                        <div class="col-sm-10 pt-2">
+                                            <label class="switch">
+                                                <input id="sellable" name="is_avail_to_sell" type="checkbox">
+                                                <span class="slider"></span>
+                                              </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="desc" class="col-sm-2 col-form-label">Description</label>
+                                        <div class="col-sm-10 pt-2">
+                                            {{update_products_form.prod_desc}}
+                                        </div>
+                                    </div>
 
+                                    <div class="form-group row">
+                                        <button class="btn btn-primary" type="submit">Update</button>
+                                    </div>
                                 </div>
                             </form>
                             <!-- /.form 1 end -->
 
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
-                            tab2
+                            <form id="update_product_price" enctype="multipart/form-data" method="POST" class="form-horizontal mx-5">
+                                {% csrf_token %}
+                                <div class="m-5">
+                                    <div class="input-group row ">
+                                        <label class="col-sm-3 col-form-label" for="sellprice">Sell Price<span class="required">*</span></label>
+                                        <input type="number" class="form-control col-sm-5" name="sell_price" title="Sell price">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">₹</span>
+                                        </div>
+                                    </div>
+                                    <div class="input-group row mt-2">
+                                        <label class="col-sm-3 col-form-label" for="shippingprice">Shipping Price<span class="required">*</span></label>
+                                        <input type="number" class="form-control col-sm-5" name="shipping_price" title="Shipping price">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">₹</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="date" class="col-sm-3 col-form-label">Date</label>
+                                        <div class="col-sm-5 mt-2">
+                                            <input type="date" class="form-control">
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </form>
+
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
-                            Morbi turpis dolor, vulputate vitae felis non, tincidunt congue mauris. Phasellus volutpat augue id mi placerat mollis. Vivamus faucibus eu massa eget condimentum. Fusce nec hendrerit sem, ac tristique nulla. Integer vestibulum orci odio. Cras nec augue
-                            ipsum. Suspendisse ut velit condimentum, mattis urna a, malesuada nunc. Curabitur eleifend facilisis velit finibus tristique. Nam vulputate, eros non luctus efficitur, ipsum odio volutpat massa, sit amet sollicitudin est libero
-                            sed ipsum. Nulla lacinia, ex vitae gravida fermentum, lectus ipsum gravida arcu, id fermentum metus arcu vel metus. Curabitur eget sem eu risus tincidunt eleifend ac ornare magna.
+                            tab3
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-one-settings" role="tabpanel" aria-labelledby="custom-tabs-one-settings-tab">
                             Pellentesque vestibulum commodo nibh nec blandit. Maecenas neque magna, iaculis tempus turpis ac, ornare sodales tellus. Mauris eget blandit dolor. Quisque tincidunt venenatis vulputate. Morbi euismod molestie tristique. Vestibulum consectetur dolor a
@@ -147,17 +188,12 @@
 <script src="{% static 'plugins/select2/js/select2.full.min.js' %}"></script>
 
 <script>
-    $('.select2').select2();
-    if ('{{update_products_form.allow_to_attach_file.value}}') {
-        $('#allow_buyer_to_attach_file').prop('checked', 'true')
-    } else {
-        $('#allow_buyer_to_attach_file').prop('checked', 'false')
+    $('.select2').select2(); {
+        /* $('#sellable').click(function () {
+                    var attach_file = $('#sellable').is(":checked")
+                    console.log(attach_file)
+                }) */
     }
-
-    //$('#allow_buyer_to_attach_file').click(function() {
-    //  var attach_file = $('#allow_buyer_to_attach_file').is(":checked")
-    // console.log(attach_file)
-    //})
 </script>
 
 {% endblock javascript %} {% endblock content %}

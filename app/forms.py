@@ -13,7 +13,7 @@ class CatagoryForm(forms.ModelForm):
         fields = "__all__" 
 
 class SubCatagoryForm(forms.ModelForm):
-    class Meta:
+    class Meta: 
         model = SubCatagory
         widgets = {
             'cat_desc': SummernoteWidget()
@@ -24,4 +24,7 @@ class ProductsForm(forms.ModelForm):
     # catagory = forms.ModelMultipleChoiceField(queryset=SubCatagory.objects.all())
     class Meta:
         model = Products
+        widgets = {
+            'prod_desc': SummernoteWidget()
+            }
         fields = "__all__" 
