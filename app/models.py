@@ -98,18 +98,7 @@ class Products(models.Model):
 
 class RelProducts(models.Model):
     """Model definition for RelProducts."""
-
-    prod_id                = models.ForeignKey(Products, on_delete=models.CASCADE)
-    prod_name              = models.CharField(max_length=50,null=True)
-    arrival_date           = models.DateField(null=True)
-    sku                    = models.CharField(max_length=50,null=True)
-    catagory               = models.ManyToManyField(SubCatagory)
-    prod_img               = models.ImageField(upload_to='products',null=True)
-    prod_desc              = models.TextField(null=True)
-    prod_size              = models.CharField(choices=[('S', 'S'),('M', 'M'),('L', 'L')], max_length=2,null=True) 
-    allow_to_attach_file   = models.BooleanField(default=False)
-    is_mandatory_to_attach = models.BooleanField(default=False)
-    is_avail_to_sell       = models.BooleanField(default=False)
+    prod_id = models.ForeignKey(Products, on_delete=models.CASCADE)
 
     class Meta:
         """Meta definition for RelProducts."""
@@ -125,6 +114,7 @@ class ProductsReview(models.Model):
     """Model definition for Products."""
 
     prod_id = models.ForeignKey(Products, on_delete=models.CASCADE, null=True)
+    date = models.DateField(auto_now_add=True, null=True)
     rating = models.CharField(max_length=50)
     reviewer_name = models.CharField(max_length=50)
     text_of_review = models.CharField(max_length=50)

@@ -213,8 +213,7 @@
                         <div class="tab-pane fade" id="custom-tabs-one-settings" role="tabpanel" aria-labelledby="custom-tabs-one-settings-tab">
                             <!-- Related product -->
                             <div class="mb-2">
-                                <button id="add_subcat" class="btn btn-outline-primary border-secondary"> Add Related Product</button>
-                                <button id="save_subcat" class="btn btn-danger float-right">Save</button>
+                                <button id="add_subcat" class="btn btn-outline-primary border-secondary" data-toggle="modal" data-target="#add_related"> Add Related Product</button>
                             </div>
                             <div class="card">
                                 <div class="card-header">
@@ -233,9 +232,9 @@
                                     <table class="table text-nowrap">
                                         <thead>
                                             <tr>
-                                                <th>Product ID</th>
-                                                <th>Product Name</th>
+                                                <th>#</th>
                                                 <th>Date</th>
+                                                <th>Product Name</th>
                                                 <th>Category</th>
                                                 <th>In Stock</th>
                                                 <th>Sell Price</th>
@@ -246,17 +245,17 @@
                                         <tbody id="tboday">
                                             {% for i in related_products %}
                                             <tr>
-                                                <td>{{i.id}}</td>
-                                                <td><a href="{% url 'product_details' ID=i.id %}">{{i.prod_name}}</a></td>
-                                                <td>{{i.arrival_date}}</td>
+                                                <td>{{forloop.counter}}</td>
+                                                <td>{{i.prod_id.arrival_date}}</td>
+                                                <td><a href="#">{{i.prod_id.prod_name}}</a></td>
                                                 <td>
-                                                    {% for j in i.catagory.all %}
+                                                    {% for j in i.prod_id.catagory.all %}
                                                     <li>{{j.cat_name}}</li> {% endfor %}
                                                 </td>
-                                                <td>{{i.quantity_in_stock}}</td>
-                                                <td>{{i.sell_price}}</td>
-                                                <td>{{i.sku}}</td>
-                                                <td><a href="/delete/{{i.id}}"><i class="fa fa-trash-alt"></i></a></td>
+                                                <td>{{i.prod_id.quantity_in_stock}}</td>
+                                                <td>{{i.prod_id.sell_price}}</td>
+                                                <td>{{i.prod_id.sku}}</td>
+                                                <td><a href="#"><i class="fa fa-trash-alt"></i></a></td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
@@ -270,8 +269,7 @@
                         <div class="tab-pane fade" id="product_review" role="tabpanel" aria-labelledby="product_review-tab">
                             <!-- product review -->
                             <div class="mb-2">
-                                <button id="add_subcat" class="btn btn-outline-primary border-secondary"> New review</button>
-                                <button id="save_subcat" class="btn btn-danger float-right">Save</button>
+                                <button id="add_subcat" class="btn btn-outline-primary border-secondary" data-toggle="modal" data-target="#add_review"> New review</button>
                             </div>
                             <div class="card">
                                 <div class="card-header">
@@ -290,7 +288,8 @@
                                     <table class="table text-nowrap">
                                         <thead>
                                             <tr>
-                                                <th>Product ID</th>
+                                                <th>#</th>
+                                                <th>Date</th>
                                                 <th>Product Name</th>
                                                 <th>Rating</th>
                                                 <th>Reviewer Name</th>
@@ -301,12 +300,13 @@
                                         <tbody id="tboday">
                                             {% for i in product_reviews %}
                                             <tr>
-                                                <td>{{i.id}}</td>
-                                                <td><a href="{% url 'product_details' ID=i.id %}">{{i.prod_id.prod_name}}</a></td>
+                                                <td>{{forloop.counter}}</td>
+                                                <td>{{i.date}}</td>
+                                                <td><a href="#">{{i.prod_id.prod_name}}</a></td>
                                                 <td>{{i.rating}}</td>
                                                 <td>{{i.reviewer_name}}</td>
                                                 <td>{{i.text_of_review}}</td>
-                                                <td><a href="/delete/{{i.id}}"><i class="fa fa-trash-alt"></i></a></td>
+                                                <td><a href="#"><i class="fa fa-trash-alt"></i></a></td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
@@ -320,6 +320,48 @@
                     </div>
                 </div>
                 <!-- /.card -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- add Related fields -->
+<div class="modal fade" id="add_related" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Related Products</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- add Related fields -->
+<div class="modal fade" id="add_review" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Product Review</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
