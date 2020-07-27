@@ -67,13 +67,14 @@ class Products(models.Model):
     prod_name              = models.CharField(max_length=50, null=True)
     sku                    = models.CharField(max_length=50, null=True)
     weight                 = models.CharField(max_length=50, null=True)
-    sell_price             = models.CharField(max_length=50, null=True)
     prod_size              = models.CharField(choices=[('S', 'S'),('M', 'M'),('L', 'L')], max_length=2, null=True) 
     
     arrival_date           = models.DateField(null=True)
     prod_img               = models.ImageField(upload_to='products', null=True)
     prod_desc              = models.TextField(null=True)
 
+    price                  = models.IntegerField(null=True)
+    sell_price             = models.IntegerField(null=True)
     shipping_price         = models.IntegerField(null=True)
     quantity_in_stock      = models.IntegerField(null=True)
 

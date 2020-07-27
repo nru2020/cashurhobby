@@ -48,8 +48,8 @@
                 <div class="card-body">
                     <div class="tab-content" id="custom-tabs-one-tabContent">
                         <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
-                            <!-- form start -->
-                            <form id="update_product" enctype="multipart/form-data" method="POST" class="form-horizontal mx-5">
+                            <!-- Basic Info -->
+                            <form id="product_basic_info" enctype="multipart/form-data" method="POST" class="form-horizontal mx-5">
                                 {% csrf_token %}
                                 <div class="m-5">
                                     <div class="form-group row">
@@ -130,48 +130,199 @@
                                     </div>
                                 </div>
                             </form>
-                            <!-- /.form 1 end -->
-
+                            <!-- /.basic info end -->
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
-                            <form id="update_product_price" enctype="multipart/form-data" method="POST" class="form-horizontal mx-5">
+                            <!-- Price and Inventory -->
+                            <form id="price_inventory" enctype="multipart/form-data" method="POST" class="form-horizontal mx-5">
                                 {% csrf_token %}
                                 <div class="m-5">
-                                    <div class="input-group row ">
-                                        <label class="col-sm-3 col-form-label" for="sellprice">Sell Price<span class="required">*</span></label>
-                                        <input type="number" class="form-control col-sm-5" name="sell_price" title="Sell price">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">₹</span>
+                                    <div class="form-group row ">
+                                        <label class="col-sm-2 col-form-label" for="sellprice">Price<span class="required">*</span></label>
+                                        <div class="col-sm-10">
+                                            <input type="number" class="form-control" name="sell_price" title="Sell price ₹" placeholder="Sell price ₹">
                                         </div>
                                     </div>
-                                    <div class="input-group row mt-2">
-                                        <label class="col-sm-3 col-form-label" for="shippingprice">Shipping Price<span class="required">*</span></label>
-                                        <input type="number" class="form-control col-sm-5" name="shipping_price" title="Shipping price">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">₹</span>
+                                    <div class="form-group row ">
+                                        <label class="col-sm-2 col-form-label" for="shippingprice">Sell Price<span class="required">*</span></label>
+                                        <div class="col-sm-10">
+                                            <input type="number" class="form-control" name="sell_price" title="Sell price ₹" placeholder="Sell price ₹">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="date" class="col-sm-3 col-form-label">Date</label>
-                                        <div class="col-sm-5 mt-2">
+                                        <label for="date" class="col-sm-2 col-form-label">Date</label>
+                                        <div class="col-sm-10">
                                             <input type="date" class="form-control">
                                         </div>
                                     </div>
-
+                                    <div class="form-group row">
+                                        <label for="is_avail_to_sell" class="col-sm-2 col-form-label">Inventory tracking</label>
+                                        <div class="col-sm-10 pt-2">
+                                            <label class="switch">
+                                                <input id="sellable" name="is_avail_to_sell" type="checkbox">
+                                                <span class="slider"></span>
+                                              </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="date" class="col-sm-2 col-form-label">Quantity stock</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mt-2">
+                                        <button class="btn btn-primary" type="submit">Update</button>
+                                    </div>
                                 </div>
                             </form>
-
+                            <!-- /.Price & inventory info end -->
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
-                            tab3
+                            <!-- Shipping -->
+                            <form id="price_inventory" enctype="multipart/form-data" method="POST" class="form-horizontal mx-5">
+                                {% csrf_token %}
+                                <div class="m-5">
+                                    <div class="form-group row ">
+                                        <label class="col-sm-2 col-form-label" for="sellprice">Weight<span class="required">*</span></label>
+                                        <div class="col-sm-10">
+                                            <input type="number" class="form-control" name="sell_price" title="Sell price ₹" placeholder="Sell price ₹">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="is_avail_to_sell" class="col-sm-2 col-form-label">Requires Shipping</label>
+                                        <div class="col-sm-10 pt-2">
+                                            <label class="switch">
+                                                <input id="sellable" name="is_avail_to_sell" type="checkbox">
+                                                <span class="slider"></span>
+                                              </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row ">
+                                        <label class="col-sm-2 col-form-label" for="sellprice">Shipping Price<span class="required">*</span></label>
+                                        <div class="col-sm-10">
+                                            <input type="number" class="form-control" name="sell_price" title="Sell price ₹" placeholder="Sell price ₹">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mt-2">
+                                        <button class="btn btn-primary" type="submit">Update</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- /.shipping end -->
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-one-settings" role="tabpanel" aria-labelledby="custom-tabs-one-settings-tab">
-                            Pellentesque vestibulum commodo nibh nec blandit. Maecenas neque magna, iaculis tempus turpis ac, ornare sodales tellus. Mauris eget blandit dolor. Quisque tincidunt venenatis vulputate. Morbi euismod molestie tristique. Vestibulum consectetur dolor a
-                            vestibulum pharetra. Donec interdum placerat urna nec pharetra. Etiam eget dapibus orci, eget aliquet urna. Nunc at consequat diam. Nunc et felis ut nisl commodo dignissim. In hac habitasse platea dictumst. Praesent imperdiet
-                            accumsan ex sit amet facilisis.
+                            <!-- Related product -->
+                            <div class="mb-2">
+                                <button id="add_subcat" class="btn btn-outline-primary border-secondary"> Add Related Product</button>
+                                <button id="save_subcat" class="btn btn-danger float-right">Save</button>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Related Products</div>
+                                    <div class="card-tools">
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                                            <div class="input-group-append">
+                                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body table-responsive p-0">
+                                    <table class="table text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>Product ID</th>
+                                                <th>Product Name</th>
+                                                <th>Date</th>
+                                                <th>Category</th>
+                                                <th>In Stock</th>
+                                                <th>Sell Price</th>
+                                                <th>Delete</th>
+                                                <th>SKU</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tboday">
+                                            {% for i in products %}
+                                            <tr>
+                                                <td>{{i.id}}</td>
+                                                <td><a href="{% url 'product_details' ID=i.id %}">{{i.prod_name}}</a></td>
+                                                <td>{{i.arrival_date}}</td>
+                                                <td>
+                                                    {% for j in i.catagory.all %}
+                                                    <li>{{j.cat_name}}</li> {% endfor %}
+                                                </td>
+                                                <td>{{i.quantity_in_stock}}</td>
+                                                <td>{{i.sell_price}}</td>
+                                                <td><a href="/delete/{{i.id}}"><i class="fa fa-trash-alt"></i></a></td>
+                                                <td>{{i.sku}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                            <!-- /.Related product end -->
                         </div>
                         <div class="tab-pane fade" id="product_review" role="tabpanel" aria-labelledby="product_review-tab">
-                            tab4
+                            <!-- product review -->
+                            <div class="mb-2">
+                                <button id="add_subcat" class="btn btn-outline-primary border-secondary"> New review</button>
+                                <button id="save_subcat" class="btn btn-danger float-right">Save</button>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Product Review</div>
+                                    <div class="card-tools">
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                                            <div class="input-group-append">
+                                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body table-responsive p-0">
+                                    <table class="table text-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th>Product ID</th>
+                                                <th>Product Name</th>
+                                                <th>Date</th>
+                                                <th>Category</th>
+                                                <th>In Stock</th>
+                                                <th>Sell Price</th>
+                                                <th>Delete</th>
+                                                <th>SKU</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tboday">
+                                            {% for i in products %}
+                                            <tr>
+                                                <td>{{i.id}}</td>
+                                                <td><a href="{% url 'product_details' ID=i.id %}">{{i.prod_name}}</a></td>
+                                                <td>{{i.arrival_date}}</td>
+                                                <td>
+                                                    {% for j in i.catagory.all %}
+                                                    <li>{{j.cat_name}}</li> {% endfor %}
+                                                </td>
+                                                <td>{{i.quantity_in_stock}}</td>
+                                                <td>{{i.sell_price}}</td>
+                                                <td><a href="/delete/{{i.id}}"><i class="fa fa-trash-alt"></i></a></td>
+                                                <td>{{i.sku}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card -->
+                            <!-- /.product review end -->
                         </div>
                     </div>
                 </div>
