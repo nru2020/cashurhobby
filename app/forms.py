@@ -2,15 +2,17 @@ from django import forms
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 from .models import Catagory, SubCatagory, Products
 
-# Apply summernote to specific fields.
+
+""" Catagory """
 class CatagoryForm(forms.ModelForm):
-    # desc = forms.CharField(widget=SummernoteWidget())  # instead of forms.Textarea
     class Meta:
         model = Catagory
+        # summernote widget
         widgets = {
             'cat_desc': SummernoteWidget()
             }
         fields = "__all__" 
+
 
 class SubCatagoryForm(forms.ModelForm):
     class Meta: 
@@ -20,11 +22,42 @@ class SubCatagoryForm(forms.ModelForm):
             }
         fields = "__all__" 
 
-class ProductsForm(forms.ModelForm):
-    # catagory = forms.ModelMultipleChoiceField(queryset=SubCatagory.objects.all())
+
+""" Products """
+class ProductBasicInfoForm(forms.ModelForm):
     class Meta:
         model = Products
         widgets = {
             'prod_desc': SummernoteWidget()
             }
-        fields = "__all__" 
+        fields = [
+            'prod_name',
+            'sku',
+            'catagory',
+            'prod_img',
+            'allow_to_attach_file',
+            'is_avail_to_sell',
+            'prod_desc',
+        ] 
+
+
+class ProductPriceInventoryForm(forms.ModelForm):
+    class Meta:
+        model = Products
+        fields = [
+            'price',
+            'sell_price',
+            'arrival_date',
+            'is_inventory_track',
+            'quantity_in_stock',
+        ] 
+
+
+class ProductShippingForm(forms.ModelForm):
+    class Meta:
+        model = Products
+        fields = [
+            'weight',
+            'req_shipping',
+            'shipping_price',
+        ] 

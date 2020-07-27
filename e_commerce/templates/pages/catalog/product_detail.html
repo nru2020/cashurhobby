@@ -49,14 +49,14 @@
                     <div class="tab-content" id="custom-tabs-one-tabContent">
                         <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
                             <!-- Basic Info -->
-                            <form id="product_basic_info" enctype="multipart/form-data" method="POST" class="form-horizontal mx-5">
+                            <form id="product_basic_info" action="" enctype="multipart/form-data" method="POST" class="form-horizontal mx-5">
                                 {% csrf_token %}
                                 <div class="m-5">
                                     <div class="form-group row">
-                                        <label for="product_name" class="col-sm-2 col-form-label">Products Name <span
+                                        <label for="prod_name" class="col-sm-2 col-form-label">Products Name <span
                                                 class="text-danger">*</span></label>
                                         <div class="col-sm-10">
-                                            <input type="text" name="product_name" title="product Name" class="form-control" id="cat_name" value="{{update_products_form.prod_name.value}}" placeholder="Product name">
+                                            <input type="text" id="prod_name" name="prod_name" title="Product Name" class="form-control" value="{{product_basic_form.prod_name.value}}" placeholder="Product name">
                                         </div>
                                     </div>
 
@@ -64,7 +64,7 @@
                                         <label for="sku" class="col-sm-2 col-form-label">SKU <span
                                                 class="text-danger">*</span></label>
                                         <div class="col-sm-10">
-                                            <input type="text" name="sku" title="SKU" class="form-control" id="sku" value="{{update_products_form.sku.value}}" placeholder="SKU">
+                                            <input type="text" id="sku" name="sku" title="SKU" class="form-control" value="{{product_basic_form.sku.value}}" placeholder="SKU">
                                         </div>
                                     </div>
 
@@ -73,8 +73,8 @@
                                                 class="text-danger">*</span></label>
                                         <div class="col-sm-10">
                                             <div class="select2-purple">
-                                                <select name="catagory" multiple="multiple" data-placeholder="Select a State" id="catagory" class="select2" style="width: 100%;">
-                                                {% for i in update_products_form.catagory %}
+                                                <select id="catagory" name="catagory" multiple="multiple" data-placeholder="Select a State" class="select2" style="width: 100%;">
+                                                {% for i in product_basic_form.catagory %}
                                                     {{i}}
                                                 {% endfor %}
                                             </select>
@@ -88,9 +88,9 @@
                                             <div class="row">
                                                 <div class="col">
                                                     <div class="dropdown">
-                                                        <img src="{{ update_products_form.prod_img.value.url }}" alt="prod_img" class="brand-image cat_icon elevation-2" width="100">
+                                                        <img src="{{ product_basic_form.prod_img.value.url }}" alt="prod_img" class="brand-image cat_icon elevation-2" width="100">
                                                         <div class="dropdown-content">
-                                                            <a href="{{ update_products_form.prod_img.value.url }}" target="_blank" class="dropdown-item"> <i class="far fa-image"></i> View image</a>
+                                                            <a href="{{ product_basic_form.prod_img.value.url }}" target="_blank" class="dropdown-item"> <i class="far fa-image"></i> View image</a>
                                                             <a><input type="file" name="prod_img" id="prod_img"></a>
                                                         </div>
                                                     </div>
@@ -100,7 +100,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="is_attach_file" class="col-sm-2 col-form-label">Allow buyers to attach files to this product</label>
+                                        <label for="allow_buyer_to_attach_file" class="col-sm-2 col-form-label">Allow buyers to attach files to this product</label>
                                         <div class="col-sm-10 pt-2">
                                             <label class="switch">
                                                 <input id="allow_buyer_to_attach_file" name="allow_buyer_to_attach_file" type="checkbox">
@@ -113,7 +113,7 @@
                                         <label for="is_avail_to_sell" class="col-sm-2 col-form-label">Available for sale</label>
                                         <div class="col-sm-10 pt-2">
                                             <label class="switch">
-                                                <input id="sellable" name="is_avail_to_sell" type="checkbox">
+                                                <input id="is_avail_to_sell" name="is_avail_to_sell" type="checkbox">
                                                 <span class="slider"></span>
                                               </label>
                                         </div>
@@ -121,7 +121,7 @@
                                     <div class="form-group row">
                                         <label for="desc" class="col-sm-2 col-form-label">Description</label>
                                         <div class="col-sm-10 pt-2">
-                                            {{update_products_form.prod_desc}}
+                                            {{product_basic_form.prod_desc}}
                                         </div>
                                     </div>
 
@@ -134,40 +134,40 @@
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
                             <!-- Price and Inventory -->
-                            <form id="price_inventory" enctype="multipart/form-data" method="POST" class="form-horizontal mx-5">
+                            <form id="price_inventory" action="" method="POST" class="form-horizontal mx-5">
                                 {% csrf_token %}
                                 <div class="m-5">
                                     <div class="form-group row ">
-                                        <label class="col-sm-2 col-form-label" for="sellprice">Price<span class="required">*</span></label>
+                                        <label class="col-sm-2 col-form-label" for="price">Price<span class="required">*</span></label>
                                         <div class="col-sm-10">
-                                            <input type="number" class="form-control" name="sell_price" title="Sell price ₹" placeholder="Sell price ₹">
+                                            <input type="number" id="price" name="price" value="{{product_price_inventory_form.price.value}}" class="form-control" title="Price" placeholder="Product price ₹">
                                         </div>
                                     </div>
                                     <div class="form-group row ">
                                         <label class="col-sm-2 col-form-label" for="shippingprice">Sell Price<span class="required">*</span></label>
                                         <div class="col-sm-10">
-                                            <input type="number" class="form-control" name="sell_price" title="Sell price ₹" placeholder="Sell price ₹">
+                                            <input type="number" id="sell_price" name="sell_price" value="{{product_price_inventory_form.sell_price.value}}" class="form-control" title="Sell price" placeholder="Sell price ₹">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="date" class="col-sm-2 col-form-label">Date</label>
+                                        <label for="arrival_date" class="col-sm-2 col-form-label">Date <span class="text-danger">*</span></label>
                                         <div class="col-sm-10">
-                                            <input type="date" class="form-control">
+                                            <input type="date" id="arrival_date" name="arrival_date" class="form-control" value="{{product_price_inventory_form.arrival_date.value}}">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="is_avail_to_sell" class="col-sm-2 col-form-label">Inventory tracking</label>
+                                        <label for="is_inventory_track" class="col-sm-2 col-form-label">Inventory tracking</label>
                                         <div class="col-sm-10 pt-2">
                                             <label class="switch">
-                                                <input id="sellable" name="is_avail_to_sell" type="checkbox">
+                                                <input id="is_inventory_track" name="is_inventory_track" type="checkbox">
                                                 <span class="slider"></span>
                                               </label>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="date" class="col-sm-2 col-form-label">Quantity stock</label>
+                                        <label for="quantity_in_stock" class="col-sm-2 col-form-label">Quantity stock</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control">
+                                            <input type="number" id="quantity_in_stock" name="quantity_in_stock" value="{{product_price_inventory_form.quantity_in_stock.value}}" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group row mt-2">
@@ -179,28 +179,28 @@
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
                             <!-- Shipping -->
-                            <form id="price_inventory" enctype="multipart/form-data" method="POST" class="form-horizontal mx-5">
+                            <form id="product_shipping" action="" method="POST" class="form-horizontal mx-5">
                                 {% csrf_token %}
                                 <div class="m-5">
                                     <div class="form-group row ">
-                                        <label class="col-sm-2 col-form-label" for="sellprice">Weight<span class="required">*</span></label>
+                                        <label for="weight" class="col-sm-2 col-form-label">Weight<span class="required">*</span></label>
                                         <div class="col-sm-10">
-                                            <input type="number" class="form-control" name="sell_price" title="Sell price ₹" placeholder="Sell price ₹">
+                                            <input type="text" id="weight" name="weight" value="{{product_shipping_form.weight.value}}" class="form-control" title="Weight" placeholder="Weight">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label for="is_avail_to_sell" class="col-sm-2 col-form-label">Requires Shipping</label>
+                                        <label for="req_shipping" class="col-sm-2 col-form-label">Requires Shipping</label>
                                         <div class="col-sm-10 pt-2">
                                             <label class="switch">
-                                                <input id="sellable" name="is_avail_to_sell" type="checkbox">
+                                                <input id="req_shipping" name="req_shipping" type="checkbox">
                                                 <span class="slider"></span>
                                               </label>
                                         </div>
                                     </div>
                                     <div class="form-group row ">
-                                        <label class="col-sm-2 col-form-label" for="sellprice">Shipping Price<span class="required">*</span></label>
+                                        <label class="col-sm-2 col-form-label" for="shipping_price">Shipping Price<span class="required">*</span></label>
                                         <div class="col-sm-10">
-                                            <input type="number" class="form-control" name="sell_price" title="Sell price ₹" placeholder="Sell price ₹">
+                                            <input type="number" id="shipping_price" name="shipping_price" value="{{product_shipping_form.shipping_price.value}}" class="form-control" title="Shipping price ₹" placeholder="Shipping price ₹">
                                         </div>
                                     </div>
                                     <div class="form-group row mt-2">
@@ -239,12 +239,12 @@
                                                 <th>Category</th>
                                                 <th>In Stock</th>
                                                 <th>Sell Price</th>
-                                                <th>Delete</th>
                                                 <th>SKU</th>
+                                                <th>Delete</th>
                                             </tr>
                                         </thead>
                                         <tbody id="tboday">
-                                            {% for i in products %}
+                                            {% for i in related_products %}
                                             <tr>
                                                 <td>{{i.id}}</td>
                                                 <td><a href="{% url 'product_details' ID=i.id %}">{{i.prod_name}}</a></td>
@@ -255,8 +255,8 @@
                                                 </td>
                                                 <td>{{i.quantity_in_stock}}</td>
                                                 <td>{{i.sell_price}}</td>
-                                                <td><a href="/delete/{{i.id}}"><i class="fa fa-trash-alt"></i></a></td>
                                                 <td>{{i.sku}}</td>
+                                                <td><a href="/delete/{{i.id}}"><i class="fa fa-trash-alt"></i></a></td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
@@ -292,28 +292,21 @@
                                             <tr>
                                                 <th>Product ID</th>
                                                 <th>Product Name</th>
-                                                <th>Date</th>
-                                                <th>Category</th>
-                                                <th>In Stock</th>
-                                                <th>Sell Price</th>
+                                                <th>Rating</th>
+                                                <th>Reviewer Name</th>
+                                                <th>Text of review:</th>
                                                 <th>Delete</th>
-                                                <th>SKU</th>
                                             </tr>
                                         </thead>
                                         <tbody id="tboday">
-                                            {% for i in products %}
+                                            {% for i in product_reviews %}
                                             <tr>
                                                 <td>{{i.id}}</td>
-                                                <td><a href="{% url 'product_details' ID=i.id %}">{{i.prod_name}}</a></td>
-                                                <td>{{i.arrival_date}}</td>
-                                                <td>
-                                                    {% for j in i.catagory.all %}
-                                                    <li>{{j.cat_name}}</li> {% endfor %}
-                                                </td>
-                                                <td>{{i.quantity_in_stock}}</td>
-                                                <td>{{i.sell_price}}</td>
+                                                <td><a href="{% url 'product_details' ID=i.id %}">{{i.prod_id.prod_name}}</a></td>
+                                                <td>{{i.rating}}</td>
+                                                <td>{{i.reviewer_name}}</td>
+                                                <td>{{i.text_of_review}}</td>
                                                 <td><a href="/delete/{{i.id}}"><i class="fa fa-trash-alt"></i></a></td>
-                                                <td>{{i.sku}}</td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>

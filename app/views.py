@@ -2,8 +2,21 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.template import loader
-from .models import Catagory, SubCatagory, Products
-from .forms import CatagoryForm, SubCatagoryForm, ProductsForm
+
+from .models import (
+    Catagory,
+    SubCatagory, 
+    Products,
+    RelProducts,
+    ProductsReview,
+)
+from .forms import (
+    CatagoryForm, 
+    SubCatagoryForm, 
+    ProductBasicInfoForm,
+    ProductPriceInventoryForm,
+    ProductShippingForm,
+)
 
 
 def pages(request):
@@ -121,10 +134,35 @@ def details_subcatagory(request, ID):
 
 """ Products """
 def products_details(request, ID):
+    if request.method == 'POST':
+        form1 = ProductBasicInfoForm(data=request.POST or None, files=request.FILES, instance=Products.objects.get(id=ID))
+        form2 = ProductPriceInventoryForm(data=request.POST or None, instance=Products.objects.get(id=ID))
+        form3 = ProductShippingForm(data=request.POST or None, instance=Products.objects.get(id=ID))
+        if form1.is_valid():
+            # print('form1')
+            form1.save()
+            return JsonResponse({'success': True})
+        elif form2.is_valid():
+            # print('form2')
+            form2.save()
+            return JsonResponse({'success': True})
+        elif form3.is_valid():
+            # print('form3')
+            form3.save()
+            return JsonResponse({'success': True})
+        else:
+            # not validated
+            # print(form3.errors.as_data())
+            return JsonResponse({'success': False})
+
     if Products.objects.filter(id=ID).exists():
         obj = Products.objects.get(id=ID)    
         context = {
-            'update_products_form': ProductsForm(instance=obj)
+            'related_products':RelProducts.objects.filter(prod_id=ID),
+            'product_reviews': ProductsReview.objects.filter(prod_id=ID),
+            'product_basic_form': ProductBasicInfoForm(instance=obj),
+            'product_price_inventory_form': ProductPriceInventoryForm(instance=obj),
+            'product_shipping_form': ProductShippingForm(instance=obj),
         }
         return render(request, 'pages/catalog/product_detail.html', context)
     return HttpResponseRedirect('/pages/catalog/products.html')    
