@@ -100,22 +100,20 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <label for="allow_buyer_to_attach_file" class="col-sm-2 col-form-label">Allow buyers to attach files to this product</label>
+                                        <label for="allow_to_attach_file" class="col-sm-2 col-form-label">Allow buyers to attach files to this product</label>
                                         <div class="col-sm-10 pt-2">
-                                            <label class="switch">
-                                                <input id="allow_buyer_to_attach_file" name="allow_buyer_to_attach_file" type="checkbox">
-                                                <span class="slider"></span>
-                                              </label>
+                                            <select name="allow_to_attach_file" id="" class="form-control">
+                                                {% for i in product_basic_form.allow_to_attach_file %} {{i}} {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label for="is_avail_to_sell" class="col-sm-2 col-form-label">Available for sale</label>
                                         <div class="col-sm-10 pt-2">
-                                            <label class="switch">
-                                                <input id="is_avail_to_sell" name="is_avail_to_sell" type="checkbox">
-                                                <span class="slider"></span>
-                                              </label>
+                                            <select name="is_avail_to_sell" id="" class="form-control">
+                                                {% for i in product_basic_form.is_avail_to_sell %} {{i}} {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -158,10 +156,9 @@
                                     <div class="form-group row">
                                         <label for="is_inventory_track" class="col-sm-2 col-form-label">Inventory tracking</label>
                                         <div class="col-sm-10 pt-2">
-                                            <label class="switch">
-                                                <input id="is_inventory_track" name="is_inventory_track" type="checkbox">
-                                                <span class="slider"></span>
-                                              </label>
+                                            <select name="is_inventory_track" id="" class="form-control">
+                                                {% for i in product_price_inventory_form.is_inventory_track %} {{i}} {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -191,10 +188,9 @@
                                     <div class="form-group row">
                                         <label for="req_shipping" class="col-sm-2 col-form-label">Requires Shipping</label>
                                         <div class="col-sm-10 pt-2">
-                                            <label class="switch">
-                                                <input id="req_shipping" name="req_shipping" type="checkbox">
-                                                <span class="slider"></span>
-                                              </label>
+                                            <select name="req_shipping" id="" class="form-control">
+                                            {% for i in product_shipping_form.req_shipping %} {{i}} {% endfor %}
+                                        </select>
                                         </div>
                                     </div>
                                     <div class="form-group row ">
@@ -246,15 +242,15 @@
                                             {% for i in related_products %}
                                             <tr>
                                                 <td>{{forloop.counter}}</td>
-                                                <td>{{i.prod_id.arrival_date}}</td>
+                                                <td>{{i.rel_prod.arrival_date}}</td>
                                                 <td><a href="#">{{i.rel_prod.prod_name}}</a></td>
                                                 <td>
-                                                    {% for j in i.prod_id.catagory.all %}
+                                                    {% for j in i.rel_prod.catagory.all %}
                                                     <li>{{j.cat_name}}</li> {% endfor %}
                                                 </td>
-                                                <td>{{i.prod_id.quantity_in_stock}}</td>
-                                                <td>{{i.prod_id.sell_price}}</td>
-                                                <td>{{i.prod_id.sku}}</td>
+                                                <td>{{i.rel_prod.quantity_in_stock}}</td>
+                                                <td>{{i.rel_prod.sell_price}}</td>
+                                                <td>{{i.rel_prod.sku}}</td>
                                                 <td><a href="#"><i class="fa fa-trash-alt"></i></a></td>
                                             </tr>
                                             {% endfor %}
@@ -336,7 +332,26 @@
           </button>
             </div>
             <div class="modal-body">
-                ...
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <label for="is_avail_to_sell" class="col-sm-2 col-form-label">Related Product</label>
+                        <div class="col-sm-10 pt-2">
+                            <select name="is_avail_to_sell" id="" class="form-control">
+                                {% for i in related_product_form.rel_prod %} {{i}} {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="is_avail_to_sell" class="col-sm-2 col-form-label">Related To</label>
+                        <div class="col-sm-10 pt-2">
+                            <select name="is_avail_to_sell" id="" class="form-control" disabled>
+                                {% for i in related_product_form.prod_id %} {{i}} {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

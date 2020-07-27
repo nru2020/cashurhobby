@@ -48,20 +48,20 @@
             <table class="table text-nowrap">
                 <thead>
                     <tr>
-                        <th>Product ID</th>
+                        <th>#</th>
                         <th>Product Name</th>
                         <th>Date</th>
                         <th>Category</th>
                         <th>In Stock</th>
                         <th>Sell Price</th>
-                        <th>Delete</th>
                         <th>SKU</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody id="tboday">
                     {% for i in products %}
                     <tr>
-                        <td>{{i.id}}</td>
+                        <td>{{forloop.counter}}</td>
                         <td><a href="{% url 'product_details' ID=i.id %}">{{i.prod_name}}</a></td>
                         <td>{{i.arrival_date}}</td>
                         <td>
@@ -70,8 +70,8 @@
                         </td>
                         <td>{{i.quantity_in_stock}}</td>
                         <td>{{i.sell_price}}</td>
-                        <td><a href="/delete/{{i.id}}"><i class="fa fa-trash-alt"></i></a></td>
                         <td>{{i.sku}}</td>
+                        <td><a href="/delete/{{i.id}}"><i class="fa fa-trash-alt"></i></a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

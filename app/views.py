@@ -16,6 +16,7 @@ from .forms import (
     ProductBasicInfoForm,
     ProductPriceInventoryForm,
     ProductShippingForm,
+    RelProductsForm,
 )
 
 
@@ -138,6 +139,7 @@ def products_details(request, ID):
         form1 = ProductBasicInfoForm(data=request.POST or None, files=request.FILES, instance=Products.objects.get(id=ID))
         form2 = ProductPriceInventoryForm(data=request.POST or None, instance=Products.objects.get(id=ID))
         form3 = ProductShippingForm(data=request.POST or None, instance=Products.objects.get(id=ID))
+        
         if form1.is_valid():
             # print('form1')
             form1.save()
@@ -160,6 +162,8 @@ def products_details(request, ID):
         context = {
             'related_products':RelProducts.objects.filter(prod_id=ID),
             'product_reviews': ProductsReview.objects.filter(prod_id=ID),
+
+            'related_product_form': RelProductsForm(instance=obj),
             'product_basic_form': ProductBasicInfoForm(instance=obj),
             'product_price_inventory_form': ProductPriceInventoryForm(instance=obj),
             'product_shipping_form': ProductShippingForm(instance=obj),

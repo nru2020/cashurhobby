@@ -1,6 +1,11 @@
 from django import forms
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
-from .models import Catagory, SubCatagory, Products
+from .models import (
+    Catagory, 
+    SubCatagory, 
+    Products,
+    RelProducts
+)
 
 
 """ Catagory """
@@ -61,3 +66,8 @@ class ProductShippingForm(forms.ModelForm):
             'req_shipping',
             'shipping_price',
         ] 
+
+class RelProductsForm(forms.ModelForm):
+    class Meta:
+        model = RelProducts
+        fields = '__all__'
