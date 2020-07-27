@@ -98,8 +98,8 @@ class Products(models.Model):
 
 class RelProducts(models.Model):
     """Model definition for RelProducts."""
-    prod_id = models.ForeignKey(Products, on_delete=models.CASCADE)
-
+    prod_id = models.ForeignKey(Products, on_delete=models.CASCADE,related_name='products', null=True)
+    rel_prod = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='products_related', null=True)
     class Meta:
         """Meta definition for RelProducts."""
 
@@ -108,7 +108,7 @@ class RelProducts(models.Model):
 
     def __str__(self):
         """Unicode representation of RelProducts."""
-        return self.prod_name
+        return self.prod_id.prod_name
 
 class ProductsReview(models.Model):
     """Model definition for Products."""
