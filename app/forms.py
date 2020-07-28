@@ -1,3 +1,4 @@
+from rest_framework import serializers
 from django import forms
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 from .models import (
@@ -7,6 +8,12 @@ from .models import (
     RelProducts
 )
 
+
+""" Modal serializer """
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Products
+        fields = '__all__'
 
 """ Catagory """
 class CatagoryForm(forms.ModelForm):

@@ -1,23 +1,10 @@
-<td class="px-1">
-    <!-- drag handle -->
-    <span class="handle"> 
-        <i class="fas fa-ellipsis-v"></i> 
-        <i class="fas fa-ellipsis-v"></i> 
-    </span>
-</td>
-
-<td class="px-1">
-    <span class="text-success"> 
-        <i class="fas fa-power-off"></i> 
-    </span>
-</td>
-<td class="p-0 m-0">
-    <span> <img src="{% static 'dist/img/AdminLTELogo.png' %}" width="50" alt=""> </span>
-</td>
-<td class="border-right">
-    <input type="text" id="cat_name" name="cat_name" class="form-control">
-</td>
-<td> <span> <i class="text-warning fas fa-star"></i> <a href="?">0</a> </span> </td>
-<td><a href="?">0</a></td>
-<td><a href="?">0</a></td>
-<td><a href="delete/2/"><i class="fas fa-trash-alt"></i></a></td>
+<tr>
+    <td>{{forloop.counter}}</td>
+    <td><input type="text" name="prod_name" id="prod_name"></td>
+    <td>{% now 'd-m-Y' %}</td>
+    <td>None</td>
+    <td>None</td>
+    <td>0</td>
+    <td>None</td>
+    <td><a href="/delete/{{i.id}}"><i class="fa fa-trash-alt"></i></a></td>
+</tr>

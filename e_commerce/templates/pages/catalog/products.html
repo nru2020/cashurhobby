@@ -1,13 +1,6 @@
 {% extends 'lib/base.html' %} {% load static %} {% block title %} Products {% endblock title %} {% block stylesheet %} {{ block.super }}
 <link rel="stylesheet" href="{% static 'css/catalog/products.css' %}"> {% endblock stylesheet %} {% block content %}
 
-<!-- 
-    <label class="switch">
-        <input type="checkbox" checked>
-        <span class="slider"></span>
-    </label>
- -->
-
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
@@ -63,7 +56,7 @@
                     <tr>
                         <td>{{forloop.counter}}</td>
                         <td><a href="{% url 'product_details' ID=i.id %}">{{i.prod_name}}</a></td>
-                        <td>{{i.arrival_date}}</td>
+                        <td>{{i.arrival_date|date:"d-m-Y"}}</td>
                         <td>
                             {% for j in i.catagory.all %}
                             <li>{{j.cat_name}}</li> {% endfor %}
@@ -71,7 +64,7 @@
                         <td>{{i.quantity_in_stock}}</td>
                         <td>{{i.sell_price}}</td>
                         <td>{{i.sku}}</td>
-                        <td><a href="/delete/{{i.id}}"><i class="fa fa-trash-alt"></i></a></td>
+                        <td><a href="{% url 'del_product' ID=i.id %}"><i class="fa fa-trash-alt"></i></a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -82,4 +75,44 @@
     <!-- /.card -->
 
 </div>
-{% endblock content %} {% block javascript %} {{ block.super }} {% endblock javascript %}
+{% block javascript %} {{ block.super }}
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+
+<script>
+    // Adding Catagory
+    $(document).ready(function() {
+        $('#save_product').css('display', 'none');
+        let new_row = `<tr> <td>{{forloop.counter}}</td> <td><input type="text" id="product_name"></td> <td>{% now 'd-m-Y' %}</td> <td>None</td> <td>None</td> <td>0</td> <td>None</td> <td><a href="/delete/{{i.id}}"><i class="fa fa-trash-alt"></i></a></td> </tr>`
+        $("#add_product").click(function() {
+            $('#add_product').prop('disabled', 'true');
+            $('#save_product').css('display', 'block');
+
+            markup = "<tr> " + new_row + "</tr>";
+            tableBody = $("table tbody");
+            tableBody.prepend(markup);
+        });
+        $('#save_product').click(function() {
+            x = $('#product_name').val()
+            if (x == '') {
+                alert('Please enter catagory name!');
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'add_product' %}",
+                    data: {
+                        prod_name: x,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(res) {
+                        if (res.success) {
+                            location.reload();
+                        } else {
+                            alert(res.success)
+                        }
+                    }
+                });
+            }
+        })
+    });
+</script>
+{% endblock javascript %} {% endblock content %}

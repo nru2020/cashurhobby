@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import date 
 
 
 class RootCatagory(models.Model):
@@ -69,8 +70,8 @@ class Products(models.Model):
     weight                 = models.CharField(max_length=50, null=True)
     prod_size              = models.CharField(choices=[('S', 'S'),('M', 'M'),('L', 'L')], max_length=2, null=True) 
     
-    arrival_date           = models.DateField(null=True)
-    prod_img               = models.ImageField(upload_to='products', null=True)
+    arrival_date           = models.DateField(default=date.today,null=True)
+    prod_img               = models.ImageField(default="default.png", upload_to='products', null=True)
     prod_desc              = models.TextField(null=True)
 
     price                  = models.IntegerField(null=True)

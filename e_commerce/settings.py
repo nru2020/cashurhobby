@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app',
     'django_summernote',
+    'rest_framework',
 ]
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'

@@ -16,5 +16,13 @@ urlpatterns = [
     path('detail_subcatagory/<int:ID>/', views.details_subcatagory, name="subcat_details"),
 
     # products
+    path('add_products/', views.add_product, name='add_product'),
+    path('del_product/<int:ID>/', views.delete_product, name='del_product'),
     path('product_details/<int:ID>/', views.products_details, name='product_details'),
+
+    # rel-products
+    path('add_rel_products/<int:product_id>/', views.add_rel_product, name='add_rel_product'),
+    path('del_rel_products/<int:ID>/<int:current_page>/', views.delete_rel_product, name='del_rel_product'),
+    path('search_rel_products/', views.search_rel_product, name='search_rel_products'),
+    
 ]

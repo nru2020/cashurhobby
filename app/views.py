@@ -1,3 +1,4 @@
+from django.core import serializers
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
@@ -17,6 +18,7 @@ from .forms import (
     ProductPriceInventoryForm,
     ProductShippingForm,
     RelProductsForm,
+    ProductSerializer,
 )
 
 
@@ -134,7 +136,64 @@ def details_subcatagory(request, ID):
 
 
 """ Products """
+def add_product(request):
+    if request.method == 'POST':
+        try:
+            product_name = request.POST['prod_name']
+            obj = Products.objects.create(
+                prod_name=product_name
+            )
+            if obj is None:
+                return JsonResponse({'success':False})
+            return JsonResponse({'success':True})
+        except:
+            print('error')
+    return JsonResponse({'success':False})
+
+# rel-product
+def add_rel_product(request, product_id):
+    if request.method == 'POST':
+        try:
+            product_names = request.POST['prod_id_list'].split(',')
+            for i in product_names:                
+                obj = RelProducts.objects.create(
+                    prod_id=Products.objects.get(id=product_id),
+                    rel_prod=Products.objects.get(id=i)
+                )
+            return JsonResponse({'success':True})
+        except:
+            pass
+    return JsonResponse({'success':False})
+
+# del related products
+def delete_rel_product(request, ID, current_page):
+    if RelProducts.objects.filter(id=ID).exists():
+        obj = RelProducts.objects.get(id=ID)
+        obj.delete()
+        return HttpResponseRedirect(f'/product_details/{current_page}/')    
+    return HttpResponseRedirect(f'/product_details/{current_page}/')    
+
+
+# (!error going on) related product search
+def search_rel_product(request):
+    if request.method == 'POST':
+        search_text = request.POST['search_text']
+        serializer = serializers.serialize("json", Products.objects.filter(prod_name__icontains=search_text))
+        data = {"searched_data": serializer}
+        return JsonResponse(data)
+    return JsonResponse({'success': False})
+
+
+# del products
+def delete_product(request, ID):
+    if Products.objects.filter(id=ID).exists():
+        obj = Products.objects.get(id=ID)
+        obj.delete()
+        return HttpResponseRedirect('/pages/catalog/products.html')    
+    return HttpResponseRedirect('/pages/catalog/products.html')    
+
 def products_details(request, ID):
+    # if post
     if request.method == 'POST':
         form1 = ProductBasicInfoForm(data=request.POST or None, files=request.FILES, instance=Products.objects.get(id=ID))
         form2 = ProductPriceInventoryForm(data=request.POST or None, instance=Products.objects.get(id=ID))
@@ -156,10 +215,12 @@ def products_details(request, ID):
             # not validated
             # print(form3.errors.as_data())
             return JsonResponse({'success': False})
-
+    
     if Products.objects.filter(id=ID).exists():
         obj = Products.objects.get(id=ID)    
         context = {
+            'all_products':Products.objects.all(),
+            'current_id':ID,
             'related_products':RelProducts.objects.filter(prod_id=ID),
             'product_reviews': ProductsReview.objects.filter(prod_id=ID),
 
@@ -167,6 +228,7 @@ def products_details(request, ID):
             'product_basic_form': ProductBasicInfoForm(instance=obj),
             'product_price_inventory_form': ProductPriceInventoryForm(instance=obj),
             'product_shipping_form': ProductShippingForm(instance=obj),
+            'catagory_form': SubCatagoryForm(),
         }
         return render(request, 'pages/catalog/product_detail.html', context)
     return HttpResponseRedirect('/pages/catalog/products.html')    
