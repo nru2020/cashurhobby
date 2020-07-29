@@ -1,4 +1,6 @@
-from django.core import serializers
+from rest_framework.response import Response
+from rest_framework import serializers
+from rest_framework.views import APIView
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
@@ -18,6 +20,7 @@ from .forms import (
     ProductPriceInventoryForm,
     ProductShippingForm,
     RelProductsForm,
+    ProductSerializer,
 )
 
 
@@ -174,13 +177,20 @@ def delete_rel_product(request, ID, current_page):
 
 
 # (!error going on) related product search
-def search_rel_product(request):
-    if request.method == 'POST':
-        search_text = request.POST['search_text']
-        serializer = serializers.serialize("json", Products.objects.filter(prod_name__icontains=search_text))
-        data = {"searched_data": serializer}
-        return JsonResponse(data)
-    return JsonResponse({'success': False})
+# def search_rel_product(request):
+class SearchRelProduct(APIView):
+    def post(self, request):
+        data = request.data
+        try:
+            print(data['search_text'])
+            queryset = Products.objects.filter(prod_name__icontains=data['search_text'])
+            print(queryset)
+            serializer_class = ProductSerializer(queryset, many=True)
+            return Response(serializer_class.data)
+        except:
+            pass
+
+        return Response({'success': False})
 
 
 # del products

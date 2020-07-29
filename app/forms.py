@@ -7,6 +7,12 @@ from .models import (
     RelProducts
 )
 
+from rest_framework import serializers
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Products
+        fields = '__all__' 
 
 """ Catagory """
 class CatagoryForm(forms.ModelForm):

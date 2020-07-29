@@ -337,7 +337,7 @@
                     {% csrf_token %}
                     <div class="form-group row p-2" style="background-color: #eff8fe;">
                         <div class="col-sm-6">
-                            <input type="text" id="search_rel_prod" class="form-control" placeholder="Search keywords">
+                            <input type="text" id="search_rel_prod" value=" " class="form-control" placeholder="Search keywords">
                         </div>
                         <div class="col-sm-3 mx-1">
                             <select id="cat" class="form-control">
@@ -365,7 +365,7 @@
                             <th>SKU</th>
                         </tr>
                     </thead>
-                    <tbody id="tboday">
+                    <tbody id="search_result">
                         {% for i in all_products %}
                         <tr>
                             {% if i.id == current_id %}
@@ -471,21 +471,27 @@
 
     // search product
     function search_products() {
-        //search eroorr  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! going on
+        $('#search_result tr').remove();
+        search_text_value = $('#search_rel_prod').val();
         $.ajax({
-            type: "POST",
+            type: 'POST',
             url: "{% url 'search_rel_products' %}",
             data: {
-                search_text: $('#search_rel_prod').val(),
-                csrfmiddlewaretoken: '{{ csrf_token }}'
+                search_text: search_text_value.trim(),
+                csrfmiddlewaretoken: "{{ csrf_token }}"
             },
-            success: function(res) {
-                $.each(res, function(i, value) {
-                    console.log(value)
-                })
+            'success': function(res) {
+                console.log(res)
+                var obj = res;
+                var tbody = $('#search_result');
+
+                $('#search_result').each(function(key, el) {
+                    for (var i = 0; i < obj.length; i++) {
+                        $(this).append(`<tr> <td> <input type='checkbox' name='select_product_id' id='${obj[i].id}'> </td> <td>${obj[i].prod_name}</td> <td>${obj[i].arrival_date}</td> <td>..</td> <td>${obj[i].quantity_in_stock}</td> <td>${obj[i].sell_price}</td> <td>${obj[i].sku}</td> </tr>`);
+                    }
+                });
             }
         });
-
     }
 </script>
 

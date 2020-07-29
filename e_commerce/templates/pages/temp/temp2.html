@@ -1,10 +1,11 @@
 <tr>
-    <td>{{forloop.counter}}</td>
-    <td><input type="text" name="prod_name" id="prod_name"></td>
-    <td>{% now 'd-m-Y' %}</td>
-    <td>None</td>
-    <td>None</td>
-    <td>0</td>
-    <td>None</td>
-    <td><a href="/delete/{{i.id}}"><i class="fa fa-trash-alt"></i></a></td>
+    <td>
+        <input type='checkbox' name='select_product_id' id='${obj[i].id}'>
+    </td>
+    <td>${obj[i].prod_name}</td>
+    <td>${obj[i].arrival_date}</td>
+    <td>..</td>
+    <td>${obj[i].quantity_in_stock}</td>
+    <td>${obj[i].sell_price}</td>
+    <td>${obj[i].sku}</td>
 </tr>
