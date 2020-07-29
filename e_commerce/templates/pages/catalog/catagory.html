@@ -1,0 +1,144 @@
+{% extends 'lib/base.html' %} {% load static %} {% block title %} Catagory {% endblock title %} {% block stylesheet %} {{ block.super }} {% endblock stylesheet %} {% block content %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Manage categories</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Catagory</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="my-3">
+        <button id="add_cat" class="btn btn-outline-primary border-secondary">Add Catagory</button>
+        <button id="save_cat" class="btn btn-danger float-right">Save</button>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Catagory</div>
+            <div class="card-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+                <thead class="text-center">
+                    <th colspan="4">Catagory</th>
+                    <th>Featured</th>
+                    <th>Subcat</th>
+                    <th colspan="2">Products <i class="fas fa-question-circle"></i></th>
+                </thead>
+                <tbody class="text-center" id="tboday">
+
+                    {% for i in catagory %}
+                    <tr>
+                        <td class="px-1">
+                            <!-- drag handle -->
+                            <span class="handle">
+                            <i class="fas fa-ellipsis-v"></i>
+                            <i class="fas fa-ellipsis-v"></i>
+                            </span>
+                        </td>
+                        <td class="px-1">
+                            <span id="enable_cat-{{i.id}}" class="text-success" style="cursor: pointer;" onclick="enable_catagory('{{i.id}}')">
+                                <i class="fas fa-power-off"></i>
+                            </span>
+                        </td>
+                        <td class="p-0 m-0">
+                            <span>
+                                <!-- <img src="{% static 'dist/img/AdminLTELogo.png' %}" width="50" alt=""> -->
+                                <img src="{{i.cat_icon.url}}" width="50" alt="Catagory_Image" class="rounded">
+                            </span>
+                        </td>
+                        <td class="border-right"><a href="{% url 'cat_detail' ID=i.id %}">{{i.cat_name}}</a></td>
+                        <td>
+                            <span>
+                                <i class="text-warning fas fa-star"></i>
+                                <a href="?">0</a>
+                            </span>
+                        </td>
+                        <td><a href="?">0</a></td>
+                        <td><a href="?">0</a></td>
+                        <td><a onclick="delete_catagory(`{% url 'del_cat' ID=i.id %}`);" href="#"><i class="fas fa-trash-alt"></i></a></td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+
+{% block javascript %} {{ block.super }}
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+
+<script>
+    // Adding Catagory
+    $(document).ready(function() {
+        $('#save_cat').css('display', 'none');
+        let new_row = `<td class="px-1"> <span class="handle"> <i class="fas fa-ellipsis-v"></i> <i class="fas fa-ellipsis-v"></i> </span> </td> <td class="px-1"> <span class="text-success"> <i class="fas fa-power-off"></i> </span> </td> <td class="p-0 m-0"> <span> <img src="{% static 'dist/img/AdminLTELogo.png' %}" width="50" alt=""> </span> </td> <td class="border-right"> <input type="text" id="cat_name" name="cat_name" class="form-control"> </td> <td> <span> <i class="text-warning fas fa-star"></i> <a href="?">0</a> </span> </td> <td><a href="?">0</a></td> <td><a href="?">0</a></td> <td><a href="delete/2/"><i class="fas fa-trash-alt"></i></a></td>`
+        $("#add_cat").click(function() {
+            $('#add_cat').prop('disabled', 'true');
+            $('#save_cat').css('display', 'block');
+
+            markup = "<tr> " + new_row + "</tr>";
+            tableBody = $("table tbody");
+            tableBody.prepend(markup);
+        });
+        $('#save_cat').click(function() {
+            x = $('#cat_name').val()
+            if (x == '') {
+                alert('Please enter catagory name!');
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'add_cat' %}",
+                    data: {
+                        catagory: x,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(res) {
+                        if (res.success) {
+                            location.reload();
+                        } else {
+                            alert("Please enter valid catagory name.")
+                        }
+                    }
+                });
+            }
+        })
+    });
+
+    //delete catagory
+    function delete_catagory(ID) {
+        x = confirm('Do you want to Delete?')
+        if (x) {
+            window.location.href = ID;
+        }
+    }
+
+    //enable disable catagory
+    function enable_catagory(ID) {
+        $(`#enable_cat-${ID}`).toggleClass('text-success')
+    }
+</script>
+
+{% endblock javascript %} {% endblock content %}
