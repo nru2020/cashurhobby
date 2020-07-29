@@ -18,7 +18,6 @@ from .forms import (
     ProductPriceInventoryForm,
     ProductShippingForm,
     RelProductsForm,
-    ProductSerializer,
 )
 
 
