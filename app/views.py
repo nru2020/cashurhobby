@@ -1,11 +1,11 @@
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.template import loader
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework.views import APIView
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404
-from django.shortcuts import render
-from django.template import loader
-
+# models
 from .models import (
     Catagory,
     SubCatagory, 
@@ -13,6 +13,7 @@ from .models import (
     RelProducts,
     ProductsReview,
 )
+# forms
 from .forms import (
     CatagoryForm, 
     SubCatagoryForm, 
@@ -24,19 +25,17 @@ from .forms import (
 )
 
 
+# default pages loader
 def pages(request):
     context = {}
     try:        
         load_template = request.path[1:]
         file_name = request.path.split('/')[-1].split('.')[0]
-
         # file with data binding
         if (file_name == 'catagory'):
             context['catagory'] = Catagory.objects.all().order_by('-id')
-
         if (file_name == 'products'):
             context['products'] = Products.objects.all().order_by('-id')
-            
         template = loader.get_template(load_template)
     except:
         # 404!
@@ -44,12 +43,17 @@ def pages(request):
     return HttpResponse(template.render(context, request))
 
 
+# homepage
 def home(request):
     return render(request, 'pages/index.html')
 
 
-""" Catagory """
-# CRUD Catagory
+""" 
+###################################
+    Name - Catagory 
+    CRUD - done by ajax jquery
+###################################
+"""
 def add_catagory(request):
     if request.method == 'POST':
         try:
@@ -137,7 +141,13 @@ def details_subcatagory(request, ID):
     return HttpResponseRedirect('/pages/catalog/catagory.html')    
 
 
-""" Products """
+
+""" 
+###################################
+    Name - Products
+    CRUD - done by ajax jquery
+###################################
+"""
 def add_product(request):
     if request.method == 'POST':
         try:
@@ -176,7 +186,6 @@ def delete_rel_product(request, ID, current_page):
     return HttpResponseRedirect(f'/product_details/{current_page}/')    
 
 
-# (!error going on) related product search
 # def search_rel_product(request):
 class SearchRelProduct(APIView):
     def post(self, request):
@@ -189,9 +198,7 @@ class SearchRelProduct(APIView):
             return Response(serializer_class.data)
         except:
             pass
-
         return Response({'success': False})
-
 
 # del products
 def delete_product(request, ID):
@@ -202,22 +209,18 @@ def delete_product(request, ID):
     return HttpResponseRedirect('/pages/catalog/products.html')    
 
 def products_details(request, ID):
-    # if post
     if request.method == 'POST':
         form1 = ProductBasicInfoForm(data=request.POST or None, files=request.FILES, instance=Products.objects.get(id=ID))
         form2 = ProductPriceInventoryForm(data=request.POST or None, instance=Products.objects.get(id=ID))
         form3 = ProductShippingForm(data=request.POST or None, instance=Products.objects.get(id=ID))
         
         if form1.is_valid():
-            # print('form1')
             form1.save()
             return JsonResponse({'success': True})
         elif form2.is_valid():
-            # print('form2')
             form2.save()
             return JsonResponse({'success': True})
         elif form3.is_valid():
-            # print('form3')
             form3.save()
             return JsonResponse({'success': True})
         else:

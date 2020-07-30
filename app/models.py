@@ -3,23 +3,16 @@ from datetime import date
 
 
 class RootCatagory(models.Model):
-    """Model definition for RootCatagory."""
-
     root_cat = models.CharField(max_length=50)
 
     class Meta:
-        """Meta definition for RootCatagory."""
-
         verbose_name = 'RootCatagory'
         verbose_name_plural = 'RootCatagory'
 
     def __str__(self):
-        """Unicode representation of RootCatagory."""
         return self.root_cat
 
 class Catagory(models.Model):
-    """Model definition for Catagories."""
-
     cat_name  = models.CharField(max_length=50, unique=True)
     par_cat   = models.ForeignKey(RootCatagory, on_delete=models.CASCADE, null=True)
     cat_title = models.CharField(choices=[('show', 'show'), ('hide', 'hide')], max_length=4, null=True)
@@ -29,18 +22,14 @@ class Catagory(models.Model):
     is_enable = models.BooleanField(max_length=50, default=True)
 
     class Meta:
-        """Meta definition for Catagories."""
-
         verbose_name = 'Catagory'
         verbose_name_plural = 'Catagory'
 
     def __str__(self):
-        """Unicode representation of Catagories."""
         return self.cat_name
 
 
 class SubCatagory(models.Model):
-    """Model definition for SubCatagory."""
     cat_name  = models.CharField(max_length=50, unique=True)
     par_cat   = models.ForeignKey(Catagory, on_delete=models.CASCADE, null=True)
     cat_title = models.CharField(choices=[('show', 'show'), ('hide', 'hide')], max_length=4, null=True, blank=True)
@@ -52,18 +41,14 @@ class SubCatagory(models.Model):
     meta_desc = models.CharField(max_length=50, null=True, blank=True) 
 
     class Meta:
-        """Meta definition for SubCatagory."""
-
         verbose_name = 'SubCatagory'
         verbose_name_plural = 'SubCatagory'
 
     def __str__(self):
-        """Unicode representation of SubCatagory."""
         return self.cat_name
 
 
 class Products(models.Model):
-    """basic information."""
     catagory               = models.ManyToManyField(SubCatagory)
     prod_name              = models.CharField(max_length=50, null=True)
     sku                    = models.CharField(max_length=50, null=True)
@@ -87,34 +72,25 @@ class Products(models.Model):
     is_avail_to_sell       = models.BooleanField(null=True)
 
     class Meta:
-        """Meta definition for Products."""
-
         verbose_name = 'Products'
         verbose_name_plural = 'Products'
 
     def __str__(self):
-        """Unicode representation of Products."""
         return self.prod_name
 
 
 class RelProducts(models.Model):
-    """Model definition for RelProducts."""
     prod_id = models.ForeignKey(Products, on_delete=models.CASCADE,related_name='products', null=True)
     rel_prod = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='products_related', null=True)
     
     class Meta:
-        """Meta definition for RelProducts."""
-
         verbose_name = 'RelProducts'
         verbose_name_plural = 'RelProducts'
 
     def __str__(self):
-        """Unicode representation of RelProducts."""
         return self.prod_id.prod_name
 
 class ProductsReview(models.Model):
-    """Model definition for Products."""
-
     prod_id = models.ForeignKey(Products, on_delete=models.CASCADE, null=True)
     date = models.DateField(auto_now_add=True, null=True)
     rating = models.CharField(max_length=50)
@@ -122,11 +98,8 @@ class ProductsReview(models.Model):
     text_of_review = models.CharField(max_length=50)
 
     class Meta:
-        """Meta definition for Products."""
-
         verbose_name = 'ProductsReview'
         verbose_name_plural = 'ProductsReview'
 
     def __str__(self):
-        """Unicode representation of Products."""
         return self.prod_id.prod_name
