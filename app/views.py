@@ -22,6 +22,7 @@ from .forms import (
     ProductShippingForm,
     RelProductsForm,
     ProductSerializer,
+    ProductReviewForm,
 )
 
 
@@ -213,7 +214,8 @@ def products_details(request, ID):
         form1 = ProductBasicInfoForm(data=request.POST or None, files=request.FILES, instance=Products.objects.get(id=ID))
         form2 = ProductPriceInventoryForm(data=request.POST or None, instance=Products.objects.get(id=ID))
         form3 = ProductShippingForm(data=request.POST or None, instance=Products.objects.get(id=ID))
-        
+        form4 = ProductReviewForm(data=request.POST or None)
+
         if form1.is_valid():
             form1.save()
             return JsonResponse({'success': True})
@@ -222,6 +224,9 @@ def products_details(request, ID):
             return JsonResponse({'success': True})
         elif form3.is_valid():
             form3.save()
+            return JsonResponse({'success': True})
+        elif form4.is_valid():
+            form4.save()
             return JsonResponse({'success': True})
         else:
             # not validated
@@ -235,12 +240,21 @@ def products_details(request, ID):
             'current_id':ID,
             'related_products':RelProducts.objects.filter(prod_id=ID),
             'product_reviews': ProductsReview.objects.filter(prod_id=ID),
-
+            
             'related_product_form': RelProductsForm(instance=obj),
             'product_basic_form': ProductBasicInfoForm(instance=obj),
             'product_price_inventory_form': ProductPriceInventoryForm(instance=obj),
             'product_shipping_form': ProductShippingForm(instance=obj),
-            'catagory_form': SubCatagoryForm(),
+            'product_review_form': ProductReviewForm(),
+            'catagory_form': SubCatagoryForm()
         }
         return render(request, 'pages/catalog/product_detail.html', context)
     return HttpResponseRedirect('/pages/catalog/products.html')    
+
+# delete product review
+def delete_prod_rating(request, ID, current_page):
+    if ProductsReview.objects.filter(id=ID).exists():
+        obj = ProductsReview.objects.get(id=ID)
+        obj.delete()
+        return HttpResponseRedirect(f'/product_details/{current_page}/')    
+    return HttpResponseRedirect(f'/product_details/{current_page}/')  

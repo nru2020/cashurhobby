@@ -6,7 +6,8 @@ from .models import (
     Catagory, 
     SubCatagory, 
     Products,
-    RelProducts
+    RelProducts,
+    ProductsReview
 )
 
 
@@ -79,4 +80,9 @@ class RelProductsForm(forms.ModelForm):
     class Meta:
         model = RelProducts
         fields = '__all__'
-        
+
+""" Product Review """
+class ProductReviewForm(forms.ModelForm):
+    class Meta:
+        model = ProductsReview
+        fields = '__all__'
