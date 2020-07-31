@@ -126,7 +126,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <button class="btn btn-primary" onclick="productBasicInfo()">Update</button>
+                                        <button class="btn btn-primary" type="submit">Update</button>
                                     </div>
                                 </div>
                             </form>
@@ -170,7 +170,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row mt-2">
-                                        <button class="btn btn-primary" onclick="productPriceInventory()">Update</button>
+                                        <button class="btn btn-primary" type="submit">Update</button>
                                     </div>
                                 </div>
                             </form>
@@ -202,7 +202,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row mt-2">
-                                        <button class="btn btn-primary" onclick="product_shipping()">Update</button>
+                                        <button class="btn btn-primary" type="submit">Update</button>
                                     </div>
                                 </div>
                             </form>
@@ -452,7 +452,7 @@
                         </div>
                     </div>
                     <div class="text-right">
-                        <button class="btn btn-primary" onclick="productReview()">Save changes</button>
+                        <button class="btn btn-primary" type="submit">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -535,105 +535,98 @@
     }
 
     // product review form submission
-    function productReview() {
-        var frm = $('#product_review_form');
-        frm.submit(function() {
-            $.ajax({
-                type: frm.attr('method'),
-                url: frm.attr('action'),
-                data: frm.serialize(),
-                success: function(data) {
-                    //alert(data.success)
-                    if (data.success) {
-                        toastr.success('Successfully Updated!')
-                        location.reload()
-                    } else {
-                        toastr.warning('Form not valid!')
-                    }
-                },
-                error: function(data) {
-                    toastr.error('Form error!')
+    var prod_review_form = $('#product_review_form');
+    prod_review_form.submit(function() {
+        $.ajax({
+            type: prod_review_form.attr('method'),
+            url: prod_review_form.attr('action'),
+            data: prod_review_form.serialize(),
+            success: function(data) {
+                //alert(data.success)
+                if (data.success) {
+                    toastr.success('Successfully Updated!')
+                    location.reload()
+                } else {
+                    toastr.warning('Form not valid!')
                 }
-            });
-            return false;
+            },
+            error: function(data) {
+                toastr.error('Form error!')
+            }
         });
-    }
+        return false;
+    });
+
 
 
     // product basic info
-    function productBasicInfo() {
-        var frm = $('#product_basic_info');
-        frm.submit(function() {
-            $.ajax({
-                type: frm.attr('method'),
-                url: frm.attr('action'),
-                data: frm.serialize(),
-                success: function(data) {
-                    //alert(data.success)
-                    if (data.success) {
-                        toastr.success('Successfully Updated!')
-                        location.reload()
-                    } else {
-                        toastr.warning('Form not valid!')
-                    }
-                },
-                error: function(data) {
-                    toastr.error('Form Error!')
+    var frm1 = $('#product_basic_info');
+    frm1.submit(function(e) {
+        $.ajax({
+            type: frm1.attr('method'),
+            url: frm1.attr('action'),
+            data: frm1.serialize(),
+            success: function(data) {
+                //alert(data.success)
+                if (data.success) {
+                    toastr.success('Successfully Updated!')
+                    location.reload()
+                } else {
+                    toastr.warning('Form not valid!')
                 }
-            });
-            return false;
+            },
+            error: function(data) {
+                toastr.error('Form Error!')
+            }
         });
-    }
+        return false;
+    });
 
-    // product 
-    function productPriceInventory() {
-        var frm = $('#price_inventory');
-        frm.submit(function() {
-            $.ajax({
-                type: frm.attr('method'),
-                url: frm.attr('action'),
-                data: frm.serialize(),
-                success: function(data) {
-                    //alert(data.success)
-                    if (data.success) {
-                        toastr.success('Successfully Updated!')
-                        location.reload()
-                    } else {
-                        toastr.warning('Form not valid!')
-                    }
-                },
-                error: function(data) {
-                    toastr.error('Form error!')
+    // product price inventory
+    var frm2 = $('#price_inventory');
+    frm2.submit(function(e) {
+        $.ajax({
+            type: frm2.attr('method'),
+            url: frm2.attr('action'),
+            data: frm2.serialize(),
+            success: function(data) {
+                //alert(data.success)
+                if (data.success) {
+                    toastr.success('Successfully Updated!')
+                    location.reload()
+                } else {
+                    toastr.warning('Form not valid!')
                 }
-            });
-            return false;
+            },
+            error: function(data) {
+                toastr.error('Form error!')
+            }
         });
-    }
+        return false;
+    });
 
     // product shipping
-    function product_shipping() {
-        var frm = $('#product_shipping');
-        frm.submit(function() {
-            $.ajax({
-                type: frm.attr('method'),
-                url: frm.attr('action'),
-                data: frm.serialize(),
-                success: function(data) {
-                    //alert(data.success)
-                    if (data.success) {
-                        toastr.success('Successfully Updated!')
-                        location.reload()
-                    } else {
-                        toastr.warning('Form not valid!')
-                    }
-                },
-                error: function(data) {
-                    toastr.error('Form error!')
+    var frm3 = $('#product_shipping');
+    frm3.submit(function(e) {
+        $.ajax({
+            type: frm3.attr('method'),
+            url: frm3.attr('action'),
+            data: frm3.serialize(),
+            success: function(data) {
+                //alert(data.success)
+                if (data.success) {
+                    toastr.success('Successfully Updated!')
+                    location.reload()
+                } else {
+                    toastr.warning('Form not valid!')
                 }
-            });
-            return false;
+            },
+            error: function(data) {
+                toastr.error('Form error!')
+            }
         });
-    }
+        return false;
+    });
 </script>
 
 {% endblock javascript %} {% endblock content %}
