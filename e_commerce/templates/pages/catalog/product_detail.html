@@ -126,7 +126,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <button class="btn btn-primary" type="submit">Update</button>
+                                        <button class="btn btn-primary" onclick="productBasicInfo()">Update</button>
                                     </div>
                                 </div>
                             </form>
@@ -170,7 +170,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row mt-2">
-                                        <button class="btn btn-primary" type="submit">Update</button>
+                                        <button class="btn btn-primary" onclick="productPriceInventory()">Update</button>
                                     </div>
                                 </div>
                             </form>
@@ -202,7 +202,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row mt-2">
-                                        <button class="btn btn-primary" type="submit">Update</button>
+                                        <button class="btn btn-primary" onclick="product_shipping()">Update</button>
                                     </div>
                                 </div>
                             </form>
@@ -452,7 +452,7 @@
                         </div>
                     </div>
                     <div class="text-right">
-                        <button type="submit" class="btn btn-primary" onclick="productReview()">Save changes</button>
+                        <button class="btn btn-primary" onclick="productReview()">Save changes</button>
                     </div>
                 </form>
             </div>
@@ -488,11 +488,12 @@
                 prod_id_list: id_list.toString(),
                 csrfmiddlewaretoken: '{{ csrf_token }}'
             },
-            success: function(res) {
-                if (res.success) {
-                    location.reload();
+            success: function(data) {
+                if (data.success) {
+                    toastr.success('Successfully Updated!')
+                    location.reload()
                 } else {
-                    alert(res.success)
+                    toastr.warning('Form not valid!')
                 }
             }
         });
@@ -503,7 +504,6 @@
     // delete
     function delete_related(ID) {
         x = confirm('Do you want to Delete?')
-        console.log(ID)
         if (x) {
             window.location.href = ID;
         }
@@ -537,7 +537,6 @@
     // product review form submission
     function productReview() {
         var frm = $('#product_review_form');
-        console.log(frm.serialize())
         frm.submit(function() {
             $.ajax({
                 type: frm.attr('method'),
@@ -545,10 +544,91 @@
                 data: frm.serialize(),
                 success: function(data) {
                     //alert(data.success)
-                    location.reload()
+                    if (data.success) {
+                        toastr.success('Successfully Updated!')
+                        location.reload()
+                    } else {
+                        toastr.warning('Form not valid!')
+                    }
                 },
                 error: function(data) {
-                    alert("Something went wrong!");
+                    toastr.error('Form error!')
+                }
+            });
+            return false;
+        });
+    }
+
+
+    // product basic info
+    function productBasicInfo() {
+        var frm = $('#product_basic_info');
+        frm.submit(function() {
+            $.ajax({
+                type: frm.attr('method'),
+                url: frm.attr('action'),
+                data: frm.serialize(),
+                success: function(data) {
+                    //alert(data.success)
+                    if (data.success) {
+                        toastr.success('Successfully Updated!')
+                        location.reload()
+                    } else {
+                        toastr.warning('Form not valid!')
+                    }
+                },
+                error: function(data) {
+                    toastr.error('Form Error!')
+                }
+            });
+            return false;
+        });
+    }
+
+    // product 
+    function productPriceInventory() {
+        var frm = $('#price_inventory');
+        frm.submit(function() {
+            $.ajax({
+                type: frm.attr('method'),
+                url: frm.attr('action'),
+                data: frm.serialize(),
+                success: function(data) {
+                    //alert(data.success)
+                    if (data.success) {
+                        toastr.success('Successfully Updated!')
+                        location.reload()
+                    } else {
+                        toastr.warning('Form not valid!')
+                    }
+                },
+                error: function(data) {
+                    toastr.error('Form error!')
+                }
+            });
+            return false;
+        });
+    }
+
+    // product shipping
+    function product_shipping() {
+        var frm = $('#product_shipping');
+        frm.submit(function() {
+            $.ajax({
+                type: frm.attr('method'),
+                url: frm.attr('action'),
+                data: frm.serialize(),
+                success: function(data) {
+                    //alert(data.success)
+                    if (data.success) {
+                        toastr.success('Successfully Updated!')
+                        location.reload()
+                    } else {
+                        toastr.warning('Form not valid!')
+                    }
+                },
+                error: function(data) {
+                    toastr.error('Form error!')
                 }
             });
             return false;
