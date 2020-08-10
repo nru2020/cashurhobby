@@ -1,0 +1,58 @@
+<!DOCTYPE html> {% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Cashurhobby | {% block title %} e-commerce {% endblock title %} </title>
+    <meta name="description" content="Cashurhobby e-commerce website" />
+    <meta name="keywords" content="e-commerce" />
+    <meta name="author" content="Cashurhobby" />
+    <link rel="icon" href="{% static 'dist/img/AdminLTELogo.png' %}"> {% block stylesheet %}
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- Adminlte theme -->
+    <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="{% static 'css/global.css' %}"> -->
+    {% endblock stylesheet %}
+
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        {% include 'includes/navbar.html' %} {% include 'includes/sidebar.html' %}
+
+        <div class="content-wrapper">
+            {% block content %} {% endblock content %}
+
+        </div>
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+            <div class="p-3">
+                <h5>Title</h5>
+                <p>add links</p>
+            </div>
+        </aside>
+        {% include 'includes/footer.html' %}
+    </div>
+
+    {% block javascripts %}
+    <!-- jQuery -->
+    <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+    <!-- overlayScrollbars -->
+    <script src="{% static 'plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+    {% endblock javascripts %}
+
+</body>
+
+</html>

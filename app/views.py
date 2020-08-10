@@ -31,6 +31,11 @@ def pages(request):
     context = {}
     try:        
         load_template = request.path[1:]
+        del_app_name = request.path.split('/')
+        del del_app_name[0] # del empty string
+        del del_app_name[0] # del admin string
+        load_template = '/'.join(del_app_name)
+        # print(load_template)
         file_name = request.path.split('/')[-1].split('.')[0]
         # file with data binding
         if (file_name == 'catagory'):
@@ -74,8 +79,8 @@ def delete_catagory(request, ID):
     if Catagory.objects.filter(id=ID).exists():
         obj = Catagory.objects.get(id=ID)
         obj.delete()
-        return HttpResponseRedirect('/pages/catalog/catagory.html')    
-    return HttpResponseRedirect('/pages/catalog/catagory.html')    
+        return HttpResponseRedirect('/admin/pages/catalog/catagory.html')    
+    return HttpResponseRedirect('/admin/pages/catalog/catagory.html')    
 
 
 def detail_catagory(request, ID):
@@ -94,7 +99,7 @@ def detail_catagory(request, ID):
             'update_catagory_form': CatagoryForm(instance=obj)
         }
         return render(request, 'pages/catalog/cat_details.html', context)
-    return HttpResponseRedirect('/pages/catalog/catagory.html')    
+    return HttpResponseRedirect('/admin/pages/catalog/catagory.html')    
 
 
 """ Sub Catagory """
@@ -139,7 +144,7 @@ def details_subcatagory(request, ID):
             'update_subcatagory_form': SubCatagoryForm(instance=obj)
         }
         return render(request, 'pages/catalog/sub_cat_details.html', context)
-    return HttpResponseRedirect('/pages/catalog/catagory.html')    
+    return HttpResponseRedirect('/admin/pages/catalog/catagory.html')    
 
 
 
@@ -183,18 +188,21 @@ def delete_rel_product(request, ID, current_page):
     if RelProducts.objects.filter(id=ID).exists():
         obj = RelProducts.objects.get(id=ID)
         obj.delete()
-        return HttpResponseRedirect(f'/product_details/{current_page}/')    
-    return HttpResponseRedirect(f'/product_details/{current_page}/')    
+        return HttpResponseRedirect(f'/admin/product_details/{current_page}/')    
+    return HttpResponseRedirect(f'/admin/product_details/{current_page}/')    
 
 
 # def search_rel_product(request):
 class SearchRelProduct(APIView):
+    def get(self, request):
+        return Response({'GET': 'Method called!'})
+    
     def post(self, request):
         data = request.data
         try:
-            print(data['search_text'])
+            # print(data['search_text'])
             queryset = Products.objects.filter(prod_name__icontains=data['search_text'])
-            print(queryset)
+            # print(queryset)
             serializer_class = ProductSerializer(queryset, many=True)
             return Response(serializer_class.data)
         except:
@@ -206,8 +214,8 @@ def delete_product(request, ID):
     if Products.objects.filter(id=ID).exists():
         obj = Products.objects.get(id=ID)
         obj.delete()
-        return HttpResponseRedirect('/pages/catalog/products.html')    
-    return HttpResponseRedirect('/pages/catalog/products.html')    
+        return HttpResponseRedirect('/admin/pages/catalog/products.html')    
+    return HttpResponseRedirect('/admin/pages/catalog/products.html')    
 
 def products_details(request, ID):
     if request.method == 'POST':
@@ -249,12 +257,12 @@ def products_details(request, ID):
             'catagory_form': SubCatagoryForm()
         }
         return render(request, 'pages/catalog/product_detail.html', context)
-    return HttpResponseRedirect('/pages/catalog/products.html')    
+    return HttpResponseRedirect('/admin/pages/catalog/products.html')    
 
 # delete product review
 def delete_prod_rating(request, ID, current_page):
     if ProductsReview.objects.filter(id=ID).exists():
         obj = ProductsReview.objects.get(id=ID)
         obj.delete()
-        return HttpResponseRedirect(f'/product_details/{current_page}/')    
-    return HttpResponseRedirect(f'/product_details/{current_page}/')  
+        return HttpResponseRedirect(f'/admin/product_details/{current_page}/')    
+    return HttpResponseRedirect(f'/admin/product_details/{current_page}/')  

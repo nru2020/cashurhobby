@@ -1,0 +1,118 @@
+{% extends 'lib/base.html' %} {% load static %} {% block title %} Products {% endblock title %} {% block stylesheet %} {{ block.super }}
+<link rel="stylesheet" href="{% static 'css/catalog/products.css' %}"> {% endblock stylesheet %} {% block content %}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Products</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Products</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<div class="container">
+    <div class="my-3">
+        <button id="add_product" class="btn btn-outline-primary border-secondary">Add Products</button>
+        <button id="save_product" class="btn btn-danger float-right">Save</button>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Products</div>
+            <div class="card-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0">
+            <table class="table text-nowrap">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Product Name</th>
+                        <th>Date</th>
+                        <th>Category</th>
+                        <th>In Stock</th>
+                        <th>Sell Price</th>
+                        <th>SKU</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody id="tboday">
+                    {% for i in products %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td><a href="{% url 'product_details' ID=i.id %}">{{i.prod_name}}</a></td>
+                        <td>{{i.arrival_date|date:"d-m-Y"}}</td>
+                        <td>
+                            {% for j in i.catagory.all %}
+                            <li>{{j.cat_name}}</li> {% endfor %}
+                        </td>
+                        <td>{{i.quantity_in_stock}}</td>
+                        <td>{{i.sell_price}}</td>
+                        <td>{{i.sku}}</td>
+                        <td><a href="{% url 'del_product' ID=i.id %}"><i class="fa fa-trash-alt"></i></a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+</div>
+{% block javascript %} {{ block.super }}
+<script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+
+<script>
+    // Adding Catagory
+    $(document).ready(function() {
+        $('#save_product').css('display', 'none');
+        let new_row = `<tr> <td>{{forloop.counter}}</td> <td><input type="text" id="product_name"></td> <td>{% now 'd-m-Y' %}</td> <td>None</td> <td>None</td> <td>0</td> <td>None</td> <td><a href="/delete/{{i.id}}"><i class="fa fa-trash-alt"></i></a></td> </tr>`
+        $("#add_product").click(function() {
+            $('#add_product').prop('disabled', 'true');
+            $('#save_product').css('display', 'block');
+
+            markup = "<tr> " + new_row + "</tr>";
+            tableBody = $("table tbody");
+            tableBody.prepend(markup);
+        });
+        $('#save_product').click(function() {
+            x = $('#product_name').val()
+            if (x == '') {
+                alert('Please enter catagory name!');
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'add_product' %}",
+                    data: {
+                        prod_name: x,
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(res) {
+                        if (res.success) {
+                            location.reload();
+                        } else {
+                            alert(res.success)
+                        }
+                    }
+                });
+            }
+        })
+    });
+</script>
+{% endblock javascript %} {% endblock content %}

@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'frontend',
     'django_summernote',
     'rest_framework',
 ]
@@ -36,13 +37,13 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'e_commerce.urls'
 
 # defined var
-TEMPLATES_DIR_PATH = os.path.join(BASE_DIR, 'e_commerce/templates')
-STATIC_ROOT_PATH = os.path.join(BASE_DIR, 'e_commerce/static')
+# TEMPLATES_DIR_PATH = os.path.join(BASE_DIR, 'templates')
+STATIC_ROOT_PATH = os.path.join(BASE_DIR, 'static')
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATES_DIR_PATH],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -97,7 +98,7 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'e_commerce/static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_URL = '/static/'
 # STATIC_ROOT = STATIC_ROOT_PATH
 
