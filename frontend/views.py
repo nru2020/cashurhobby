@@ -12,6 +12,7 @@ def pages(request):
     context = {}
     try:        
         load_template = request.path[1:]
+        print(load_template)
         # file_name = request.path.split('/')[-1].split('.')[0]
         # file with data binding
         template = loader.get_template(load_template)
