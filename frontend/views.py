@@ -1,6 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.template import loader
+import json
+
+from app.models import (
+    Catagory,
+    SubCatagory
+)
 
 """ 
 ############################# ++++++++++++++++++++ #############################
@@ -12,7 +18,6 @@ def pages(request):
     context = {}
     try:        
         load_template = request.path[1:]
-        print(load_template)
         # file_name = request.path.split('/')[-1].split('.')[0]
         # file with data binding
         template = loader.get_template(load_template)
@@ -23,5 +28,17 @@ def pages(request):
 
 
 def index(request):
-    return render(request, 'index.html')
+    context = {
+        'catagory_list': Catagory.objects.values('id', 'cat_name')
+    }
+    return render(request, 'index.html', context)
+
+def get_sub_catagories(request, ID):
+    obj = SubCatagory.objects.filter(par_cat=Catagory.objects.get(id=ID)).values('id', 'cat_name')
+    qs_json = json.dumps(list(obj))
+    # print(qs_json)
+    return HttpResponse(qs_json)
+
+def sub_cat_page(request, ID):
     
+    return render(request, 'fpages/404.html')

@@ -122,12 +122,19 @@
                     <ul class="nav navbar-nav">
                         <li><a href="index.html">Just In</a></li>
 
-                        <li><a href="#">Sets</a></li>
+                        <!-- <li><a href="#">Sets</a></li>
                         <li><a href="#">Dresses </a>
 
                         </li>
                         <li><a href="#">Kurtis</a></li>
-                        <li><a href="#">Lehengas</a></li>
+                        <li><a href="#">Lehengas</a></li> -->
+
+                        {% for i in catagory_list %}
+                        <li>
+                            <a href="#" onmouseover="getSubCat(`{% url 'get_sub_cat' ID=i.id %}`);">{{i.cat_name}} <span class="caret"></span></a>
+                            <ul class="dropdown-menu" id="catagory_{{i.id}}"></ul>
+                        </li>
+                        {% endfor %}
 
 
                         <li><a href="contact.html">ContactUs</a></li>

@@ -1535,6 +1535,41 @@
     <script type="text/javascript" src="{% static 'frontend/js/nouislider.js' %}"></script>
     <!-- Custom js -->
     <script src="{% static 'frontend/js/custom.js' %}"></script>
+
+    <script>
+        // on mouse over => catagories
+        function getSubCat(ID) {
+            //console.log(ID)
+            // get id of this a tag
+            var x = ID.slice(ID.length - 2).charAt(0)
+            var ele = $(`#catagory_${x}`)
+                // console.log(ele)
+            $.ajax({
+                type: "GET",
+                url: ID,
+                data: {},
+                dataType: 'json',
+                success: function(res) {
+                    ele.empty()
+                    if (res) {
+                        for (var i = 0; i < res.length; i++) {
+                            console.log(res[i].id)
+                            console.log(res[i].cat_name)
+                            ele.append(`<li><a href="#" onclick="openSubCat('${res[i].id}')">${res[i].cat_name}</a>`)
+                        }
+                    }
+                }
+            });
+        }
+
+        // on click subcatagory
+        function openSubCat(ID) {
+            // Construct the temp URL with "fake_id"
+            var url = "{% url 'sub_cat_page' ID=123 %}";
+            // Construct the full URL with "id"
+            document.location.href = url.replace(123, ID)
+        }
+    </script>
 </body>
 
 </html>
