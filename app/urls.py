@@ -23,6 +23,6 @@ urlpatterns = [
     # rel-products
     path('add_rel_products/<int:product_id>/', views.add_rel_product, name='add_rel_product'),
     path('del_rel_products/<int:ID>/<int:current_page>/', views.delete_rel_product, name='del_rel_product'),
-    path('search_rel_products/', views.search_rel_product, name='search_rel_products'),
-    
+    path('search_rel_products/', views.SearchRelProduct.as_view(), name='search_rel_products'),
+    path('del_prod_review/<int:ID>/<int:current_page>/', views.delete_prod_rating, name='del_prod_review'),
 ]

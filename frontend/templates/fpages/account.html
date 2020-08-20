@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Daily Shop | Account Page</title>
+
+    <!-- Font awesome -->
+    <link href="{% static 'frontend/css/font-awesome.css' %}" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="{% static 'frontend/css/bootstrap.css' %}" rel="stylesheet">
+    <!-- SmartMenus jQuery Bootstrap Addon CSS -->
+    <link href="{% static 'frontend/css/jquery.smartmenus.bootstrap.css' %}" rel="stylesheet">
+    <!-- Product view slider -->
+    <link rel="stylesheet" type="text/css" href="{% static 'frontend/css/jquery.simpleLens.css' %}">
+    <!-- slick slider -->
+    <link rel="stylesheet" type="text/css" href="{% static 'frontend/css/slick.css' %}">
+    <!-- price picker slider -->
+    <link rel="stylesheet" type="text/css" href="{% static 'frontend/css/nouislider.css' %}">
+    <!-- Theme color -->
+    <link id="switcher" href="{% static 'frontend/css/theme-color/default-theme.css' %}" rel="stylesheet">
+    <!-- Top Slider CSS -->
+    <link href="{% static 'frontend/css/sequence-theme.modern-slide-in.css' %}" rel="stylesheet" media="all">
+
+    <!-- Main style sheet -->
+    <link href="{% static 'frontend/css/style.css' %}" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+    <!-- SCROLL TOP BUTTON -->
+    <a class="scrollToTop" href="#"><i class="fa fa-chevron-up"></i></a>
+    <!-- END SCROLL TOP BUTTON -->
+
+
+    <!-- Start header section -->
+    <div id="header"></div>
+    <!-- / header section -->
+    <!-- catg header banner section -->
+    <section id="aa-catg-head-banner">
+        <img src="{% static 'frontend/img/fashion/fashion-header-bg-8.jpg' %}" alt="fashion img">
+        <div class="aa-catg-head-banner-area">
+            <div class="container">
+                <div class="aa-catg-head-banner-content">
+                    <h2>Account Page</h2>
+                    <ol class="breadcrumb">
+                        <li><a href="index.html">Home</a></li>
+                        <li class="active">Account</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- / catg header banner section -->
+
+    <!-- Cart view section -->
+    <section id="aa-myaccount">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="aa-myaccount-area">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="aa-myaccount-login">
+                                    <h4>Login</h4>
+                                    <form action="" class="aa-login-form">
+                                        <label for="">Username or Email address<span>*</span></label>
+                                        <input type="text" placeholder="Username or email">
+                                        <label for="">Password<span>*</span></label>
+                                        <input type="password" placeholder="Password">
+                                        <button type="submit" class="aa-browse-btn">Login</button>
+                                        <label class="rememberme" for="rememberme"><input type="checkbox" id="rememberme"> Remember me </label>
+                                        <p class="aa-lost-password"><a href="#">Lost your password?</a></p>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="aa-myaccount-register">
+                                    <h4>Register</h4>
+                                    <form action="" class="aa-login-form">
+                                        <label for="">Username or Email address<span>*</span></label>
+                                        <input type="text" placeholder="Username or email">
+                                        <label for="">Password<span>*</span></label>
+                                        <input type="password" placeholder="Password">
+                                        <button type="submit" class="aa-browse-btn">Register</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- / Cart view section -->
+
+    <!-- footer -->
+    <div id="footer"></div>
+    <!-- / footer -->
+    <!-- Login Modal -->
+    <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4>Login or Register</h4>
+                    <form class="aa-login-form" action="">
+                        <label for="">Username or Email address<span>*</span></label>
+                        <input type="text" placeholder="Username or email">
+                        <label for="">Password<span>*</span></label>
+                        <input type="password" placeholder="Password">
+                        <button class="aa-browse-btn" type="submit">Login</button>
+                        <label for="rememberme" class="rememberme"><input type="checkbox" id="rememberme"> Remember me </label>
+                        <p class="aa-lost-password"><a href="#">Lost your password?</a></p>
+                        <div class="aa-register-now">
+                            Don't have an account?<a href="account.html">Register now!</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'frontend/js/bootstrap.js' %}"></script>
+    <!-- SmartMenus jQuery plugin -->
+    <script type="text/javascript" src="{% static 'frontend/js/jquery.smartmenus.js' %}"></script>
+    <!-- SmartMenus jQuery Bootstrap Addon -->
+    <script type="text/javascript" src="{% static 'frontend/js/jquery.smartmenus.bootstrap.js' %}"></script>
+    <!-- To Slider JS -->
+    <script src="{% static 'frontend/js/sequence.js' %}"></script>
+    <script src="{% static 'frontend/js/sequence-theme.modern-slide-in.js' %}"></script>
+    <!-- Product view slider -->
+    <script type="text/javascript" src="{% static 'frontend/js/jquery.simpleGallery.js' %}"></script>
+    <script type="text/javascript" src="{% static 'frontend/js/jquery.simpleLens.js' %}"></script>
+    <!-- slick slider -->
+    <script type="text/javascript" src="{% static 'frontend/js/slick.js' %}"></script>
+    <!-- Price picker slider -->
+    <script type="text/javascript" src="{% static 'frontend/js/nouislider.js' %}"></script>
+    <!-- Custom js -->
+    <script src="{% static 'frontend/js/custom.js' %}"></script>
+
+</body>
+
+</html>

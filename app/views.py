@@ -1,9 +1,11 @@
-from django.core import serializers
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.template import loader
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
-from django.template import loader
-
+from rest_framework.response import Response
+from rest_framework import serializers
+from rest_framework.views import APIView
+# models
 from .models import (
     Catagory,
     SubCatagory, 
@@ -11,6 +13,7 @@ from .models import (
     RelProducts,
     ProductsReview,
 )
+# forms
 from .forms import (
     CatagoryForm, 
     SubCatagoryForm, 
@@ -18,22 +21,27 @@ from .forms import (
     ProductPriceInventoryForm,
     ProductShippingForm,
     RelProductsForm,
+    ProductSerializer,
+    ProductReviewForm,
 )
 
 
+# default pages loader
 def pages(request):
     context = {}
     try:        
         load_template = request.path[1:]
+        del_app_name = request.path.split('/')
+        del del_app_name[0] # del empty string
+        del del_app_name[0] # del admin string
+        load_template = '/'.join(del_app_name)
+        # print(load_template)
         file_name = request.path.split('/')[-1].split('.')[0]
-
         # file with data binding
         if (file_name == 'catagory'):
             context['catagory'] = Catagory.objects.all().order_by('-id')
-
         if (file_name == 'products'):
             context['products'] = Products.objects.all().order_by('-id')
-            
         template = loader.get_template(load_template)
     except:
         # 404!
@@ -41,12 +49,17 @@ def pages(request):
     return HttpResponse(template.render(context, request))
 
 
+# homepage
 def home(request):
     return render(request, 'pages/index.html')
 
 
-""" Catagory """
-# CRUD Catagory
+""" 
+###################################
+    Name - Catagory 
+    CRUD - done by ajax jquery
+###################################
+"""
 def add_catagory(request):
     if request.method == 'POST':
         try:
@@ -66,8 +79,8 @@ def delete_catagory(request, ID):
     if Catagory.objects.filter(id=ID).exists():
         obj = Catagory.objects.get(id=ID)
         obj.delete()
-        return HttpResponseRedirect('/pages/catalog/catagory.html')    
-    return HttpResponseRedirect('/pages/catalog/catagory.html')    
+        return HttpResponseRedirect('/admin/pages/catalog/catagory.html')    
+    return HttpResponseRedirect('/admin/pages/catalog/catagory.html')    
 
 
 def detail_catagory(request, ID):
@@ -86,7 +99,7 @@ def detail_catagory(request, ID):
             'update_catagory_form': CatagoryForm(instance=obj)
         }
         return render(request, 'pages/catalog/cat_details.html', context)
-    return HttpResponseRedirect('/pages/catalog/catagory.html')    
+    return HttpResponseRedirect('/admin/pages/catalog/catagory.html')    
 
 
 """ Sub Catagory """
@@ -131,10 +144,16 @@ def details_subcatagory(request, ID):
             'update_subcatagory_form': SubCatagoryForm(instance=obj)
         }
         return render(request, 'pages/catalog/sub_cat_details.html', context)
-    return HttpResponseRedirect('/pages/catalog/catagory.html')    
+    return HttpResponseRedirect('/admin/pages/catalog/catagory.html')    
 
 
-""" Products """
+
+""" 
+###################################
+    Name - Products
+    CRUD - done by ajax jquery
+###################################
+"""
 def add_product(request):
     if request.method == 'POST':
         try:
@@ -169,46 +188,53 @@ def delete_rel_product(request, ID, current_page):
     if RelProducts.objects.filter(id=ID).exists():
         obj = RelProducts.objects.get(id=ID)
         obj.delete()
-        return HttpResponseRedirect(f'/product_details/{current_page}/')    
-    return HttpResponseRedirect(f'/product_details/{current_page}/')    
+        return HttpResponseRedirect(f'/admin/product_details/{current_page}/')    
+    return HttpResponseRedirect(f'/admin/product_details/{current_page}/')    
 
 
-# (!error going on) related product search
-def search_rel_product(request):
-    if request.method == 'POST':
-        search_text = request.POST['search_text']
-        serializer = serializers.serialize("json", Products.objects.filter(prod_name__icontains=search_text))
-        data = {"searched_data": serializer}
-        return JsonResponse(data)
-    return JsonResponse({'success': False})
-
+# def search_rel_product(request):
+class SearchRelProduct(APIView):
+    def get(self, request):
+        return Response({'GET': 'Method called!'})
+    
+    def post(self, request):
+        data = request.data
+        try:
+            # print(data['search_text'])
+            queryset = Products.objects.filter(prod_name__icontains=data['search_text'])
+            # print(queryset)
+            serializer_class = ProductSerializer(queryset, many=True)
+            return Response(serializer_class.data)
+        except:
+            pass
+        return Response({'success': False})
 
 # del products
 def delete_product(request, ID):
     if Products.objects.filter(id=ID).exists():
         obj = Products.objects.get(id=ID)
         obj.delete()
-        return HttpResponseRedirect('/pages/catalog/products.html')    
-    return HttpResponseRedirect('/pages/catalog/products.html')    
+        return HttpResponseRedirect('/admin/pages/catalog/products.html')    
+    return HttpResponseRedirect('/admin/pages/catalog/products.html')    
 
 def products_details(request, ID):
-    # if post
     if request.method == 'POST':
         form1 = ProductBasicInfoForm(data=request.POST or None, files=request.FILES, instance=Products.objects.get(id=ID))
         form2 = ProductPriceInventoryForm(data=request.POST or None, instance=Products.objects.get(id=ID))
         form3 = ProductShippingForm(data=request.POST or None, instance=Products.objects.get(id=ID))
-        
+        form4 = ProductReviewForm(data=request.POST or None)
+
         if form1.is_valid():
-            # print('form1')
             form1.save()
             return JsonResponse({'success': True})
         elif form2.is_valid():
-            # print('form2')
             form2.save()
             return JsonResponse({'success': True})
         elif form3.is_valid():
-            # print('form3')
             form3.save()
+            return JsonResponse({'success': True})
+        elif form4.is_valid():
+            form4.save()
             return JsonResponse({'success': True})
         else:
             # not validated
@@ -222,12 +248,21 @@ def products_details(request, ID):
             'current_id':ID,
             'related_products':RelProducts.objects.filter(prod_id=ID),
             'product_reviews': ProductsReview.objects.filter(prod_id=ID),
-
+            
             'related_product_form': RelProductsForm(instance=obj),
             'product_basic_form': ProductBasicInfoForm(instance=obj),
             'product_price_inventory_form': ProductPriceInventoryForm(instance=obj),
             'product_shipping_form': ProductShippingForm(instance=obj),
-            'catagory_form': SubCatagoryForm(),
+            'product_review_form': ProductReviewForm(),
+            'catagory_form': SubCatagoryForm()
         }
         return render(request, 'pages/catalog/product_detail.html', context)
-    return HttpResponseRedirect('/pages/catalog/products.html')    
+    return HttpResponseRedirect('/admin/pages/catalog/products.html')    
+
+# delete product review
+def delete_prod_rating(request, ID, current_page):
+    if ProductsReview.objects.filter(id=ID).exists():
+        obj = ProductsReview.objects.get(id=ID)
+        obj.delete()
+        return HttpResponseRedirect(f'/admin/product_details/{current_page}/')    
+    return HttpResponseRedirect(f'/admin/product_details/{current_page}/')  

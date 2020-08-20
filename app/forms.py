@@ -1,12 +1,21 @@
-from django import forms
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
+from rest_framework import serializers
+from django import forms
+
 from .models import (
     Catagory, 
     SubCatagory, 
     Products,
-    RelProducts
+    RelProducts,
+    ProductsReview
 )
 
+
+# Product serializer add related-products 
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Products
+        fields = '__all__' 
 
 """ Catagory """
 class CatagoryForm(forms.ModelForm):
@@ -70,4 +79,10 @@ class ProductShippingForm(forms.ModelForm):
 class RelProductsForm(forms.ModelForm):
     class Meta:
         model = RelProducts
+        fields = '__all__'
+
+""" Product Review """
+class ProductReviewForm(forms.ModelForm):
+    class Meta:
+        model = ProductsReview
         fields = '__all__'
