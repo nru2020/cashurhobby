@@ -5,7 +5,8 @@ import json
 
 from app.models import (
     Catagory,
-    SubCatagory
+    SubCatagory,
+    Products
 )
 
 """ 
@@ -33,12 +34,17 @@ def index(request):
     }
     return render(request, 'index.html', context)
 
+# catagory dropdown 
 def get_sub_catagories(request, ID):
     obj = SubCatagory.objects.filter(par_cat=Catagory.objects.get(id=ID)).values('id', 'cat_name')
     qs_json = json.dumps(list(obj))
     # print(qs_json)
     return HttpResponse(qs_json)
 
+
 def sub_cat_page(request, ID):
-    
-    return render(request, 'fpages/404.html')
+    obj = Products.objects.filter(catagory=SubCatagory.objects.get(id=ID))
+    products = {
+        'products': obj
+    }
+    return render(request, 'fpages/product.html', products)
